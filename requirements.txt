@@ -1,0 +1,7 @@
+dotenv==0.9.9
+groq==0.24.0
+markdown-it-py==3.0.0
+matplotlib==3.7.5
+openpyxl==3.1.5
+pandas==2.0.3
+xhtml2pdf==0.2.17

@@ -1,0 +1,1 @@
+source venv/bin/activate && python3 src/run_full_enrichment_with_improved_pubchem.py --input src/input/normal_ranges_with_all_HMDB_IDs.csv
