@@ -60,6 +60,9 @@ def main():
                 args.input,
                 sample_size=args.limit
             )
+            # Save enriched data to combined JSON files in the specified output directory
+            enricher.save_enriched_data_to_json(os.path.join(args.output_dir, 'metabolite_enriched_data.json'))
+            enricher.save_enriched_data_by_name_to_json(os.path.join(args.output_dir, 'metabolite_enriched_data_by_name.json'))
             logger.info("Enrichment process completed")
 
     except Exception as e:
