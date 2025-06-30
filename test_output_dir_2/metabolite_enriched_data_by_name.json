@@ -1,0 +1,300 @@
+{
+  "1,3-Diaminopropane": {
+    "metabolite_name": "1,3-Diaminopropane",
+    "hmdb_id_list": [
+      "HMDB0000002"
+    ],
+    "original_data": {
+      "low_level": 0.01,
+      "high_level": 0.07,
+      "sd": NaN,
+      "reference": NaN
+    },
+    "original_name": "1,3-Diaminopropane",
+    "enhanced_name": "1,3-Diaminopropane",
+    "all_synonyms": [],
+    "chemical_classes": [],
+    "taxonomy": {
+      "kingdom": "",
+      "super_class": "",
+      "class": "",
+      "sub_class": "",
+      "direct_parent": ""
+    },
+    "chemical_properties": {
+      "iupac_name": "",
+      "common_name": "",
+      "molecular_formula": "C3H10N2",
+      "molecular_weight": "",
+      "canonical_smiles": "C(CN)CN",
+      "inchi": "InChI=1S/C3H10N2/c4-2-1-3-5/h1-5H2",
+      "pubchem_cid": "428",
+      "compound_description": "1,3-diaminopropane is a water-white mobile liquid with an odor of amine. (NTP, 1992) Trimethylenediamine is an alkane-alpha,omega-diamine comprising a propane skeleton with amino substituents at positions 1 and 3. It has a role as a reagent, a human metabolite and a mouse metabolite. It is a conjugate base of a trimethylenediaminium. 1,3-Diaminopropane has been reported in Cyanidium caldarium, Medicago sativa, and other organisms with data available. 1,3-Diaminopropane is a metabolite found in or produced by Saccharomyces cerevisiae.propane-1,3-diamineInChI=1S/C3H10N2/c4-2-1-3-5/h1-5H2XFNJVJPLKCPIBV-UHFFFAOYSA-NC(CN)CNC3H10N2 C3H10N2 C3H10N2109-76-2 109-76-2 109-76-2 109-76-2 109-76-2 109-76-2 109-76-2 109-76-2 109-76-2 54018-94-9 18773-03-0 109-76-2 109-76-2 109-76-262704-76-1 10517-44-9 (di-hydrochloride)1628783-17-4, 54018-94-9 1628783-17-4, 54018-94-9203-702-7 611-082-8 811-811-1CB3ISL56KG2734 (1,3-DIAMINOPROPANE)CHEBI:15725CHEMBL174324DTXSID1021906HMDB0000002C0098637023J1.969K8154Q1614981,3-Diaminopropane1,3-diaminepropane 1,3-diaminopropane 1,3-propanediamine trimethylenediamine trimethylenediamine dihydrochloride trimethylenediamine hydrochloride1,3-diaminopropane 1,3-Propanediamine Propane-1,3-diamine Trimethylenediamine CCRIS 4054 BRN 0605277 UNII-CB3ISL56KG AI3-25358 NSC 8154 1,3diaminopropane a,w-Propanediamine EINECS 203-702-7 H2N(CH2)3NH2 CHEBI:15725 1,3-Trimethylenediamine 1,3-Diamino-n-propane NSC-8154 DIAMINOPROPANE, 1,3- DTXSID1021906 EC 203-702-7 4-04-00-01258 (Beilstein Handbook Reference) 54018-94-9 1,3propylenediamine alpha,omegaPropanediamine DTXCID301906 611-082-8 inchi=1/c3h10n2/c4-2-1-3-5/h1-5h un2258 xfnjvjplkcpibv-uhfffaoysa-n 109-76-2 1,3-Propylenediamine 3-Aminopropylamine alpha,omega-Propanediamine 347840-13-5 MFCD00008228 CB3ISL56KG PROPANE, 1,3-DIAMINO- 1,3-Propane-1,1,3,3-d4-diamine(9CI) C00986 Propane-1,3-diammonium bromide 1,3-diaminopropan 1,3-diaminepropane 1,3-propane diamine 18773-03-0 aminopropylamine 1,3-propandiamine 1,3 diaminopropane 1.3-diaminopropane 1,3 -diaminopropane 1,3-diamino propane 1,3-diamino-propane 1, 3-Diaminopropane 1,3-Propane-diamine Spectrum_001150 SpecPlus_000418 Spectrum4_001903 Spectrum5_000586 bmse000001 bmse000796 bmse000872 SCHEMBL8182 WLN: Z3Z SCHEMBL94135 KBioGR_002492 KBioSS_001630 DivK1c_006514 SCHEMBL359767 CHEMBL174324 SCHEMBL2067695 SCHEMBL4390319 SCHEMBL4923378 SCHEMBL5058095 SCHEMBL8098823 SCHEMBL8737278 1,3-Diaminopropane, >=99% SCHEMBL10784550 SCHEMBL11520959 CHEBI:35411 KBio1_001458 KBio2_001630 KBio2_004198 KBio2_006766 NSC8154 STR02314 XNA84013 BBL027701 MSK002131 STL194260 1,3-Propanediamine;Trimethylenediamine AKOS000119455 .ALPHA.,.OMEGA.-PROPANEDIAMINE FD53866 RP10060 NCGC00178092-01 BP-21144 BP-26277 HY-42210 PD099153 1,3-Diaminopropane Dihydrobromide, >/=98% CS-0020848 D0114 NS00001874 EN300-20409 Q161498 B4A724BF-48DB-479D-B403-B44C7C956D5B F2191-0286 Z104478068TMEDA Propandiamine Propanediamine Diamine propane-1 1,3-propandiamina alpha,omega-Diamine 1 3-Diaminopropane 1 3-Propylenediamine |A,|O-propanediamine Diamino-1,3-propane Propanediamine, 1,3- ACMC-1ANKT 1 3-Trimethylenediamine 1 3-Diamino-n-propane XFNJVJPLKCPIBV-UHFFFAOYSA-N 1,3-Propane-d6-diamine Alkane-alpha,omega-diamine alkane-alpha,omega-diamines ?,?-PROPANEDIAMINE AC1L197M CID428 trimethylenediamine hydrochloride Jsp000764 1,3-PROPANEDIAMINE-1,1,3,3-D4 CTK0H6716 1,3-DAP C3H10N2 CID:428 1,3-Diaminopropane dihydrobromide Trimethylenediamine dihydrochloride UN2258 Platinum(II),3-propanediammine)- 1,3-Propane-1,1,3,3-d4-diamine AMY21886 ZINC5828682 EINECS 268-600-7 EINECS 269-099-8 ANW-16088 C3-H10-N2 LS-486 NA2929 UN2929 1,3-PROPANEDIAMINE-2,2-D2 RL00418 RP18339 RTR-031874 TRA0061990 KS-000000F5 AJ-26814 AN-22574 SC-16220 SID:137275683 TR-031874 1,3-DIAMINOPROPANE (REFERENCE GRADE) Dap InChI=1/C3H10N2/c4-2-1-3-5/h1-5H 1576-EP2272837A1 1576-EP2284148A1 1576-EP2302015A1 1576-EP2305627A1 1576-EP2371795A1 1,1,2,2,3,3-hexadeuteriopropane-1,3-diamine 86781-EP2281563A1 86781-EP2287167A1 86781-EP2289891A2 86781-EP2305684A1 (C10-C16)Alkylalkoxypropyleneamine propyleneamine (C12-C18) Alkylalkoxypropyleneaminepropyleneamine C009475 68333-86-8 A1238070 I05-0384 1,3-Propanediamine, N-[3-(C12-18-alkyloxy)propyl] derivs. I14-56401 N-(C12-C15)Alkoxypropyl-1,3-propanediamine acetate (C12-C18)Alkyl alkoxy propylene amine propylene amine 1,3-Propanediamine, N-[3-(C12-15-alkyloxy)propyl] derivs., acetates 1,3-Propanediamine, N-(3-(C10-16-alkyloxy)propyl) derivs. 1,3-Propanediamine, N-(3-(C12-18-alkyloxy)propyl) derivs. 1,3-Propanediamine, N-[3-(C10-16-alkyloxy)propyl] derivs. 1,3-Propanediamine, N-[3-(C12-18-alkyloxy)propyl] derivatives 1,3-Propanediamine, N-(3-(C12-15-alkyloxy)propyl) derivs, acetates 1,3-Propanediamine, N-(3-(C12-15-alkyloxy)propyl) derivs., acetates 68130-68-7 90375-98-7 tn 1,3-Diamino-n-propane; 1,3-Diaminopropane; 1,3-Propylenediamine; 1,3-Trimethylenediamine; 3-Aminopropylamine; DAP; NSC 8154; TMEDA; Trimethylenediamine; alpha,?-Propanediamine 13D 3-(6H-benzo[c][1]benzoxepin-11-ylidene)-N-methyl-N-(trideuteriomethyl)propan-1-amine,hydrochloride 35028-95-6 352438-78-9 68187-46-2",
+      "biological_summary": "PubMed: 17668437, 15607313, 14569192, 10379660, 17403619, 22284503, 20300169, 22061338, 19783829, 19010317 PubMed: 7482520, 19006102, 23940645, 24424155, 20156336, 19678709, 22148915, 25105552, 21773981, 25037050, 27015276, 27107423, 27275383, 28587349 Silke Matysik, Caroline Ivanne Le Roy, Gerhard Liebisch, Sandrine Paule Claus. Metabolomics of fecal samples: A practical consideration. Trends in Food Science & Technology. Vol. 57, Part B, Nov. 2016, p.244-255: http://www.sciencedirect.com/science/article/pii/S0924224416301984 PubMed: 9464484, 1184685, 15911239, 7482520, 11129502",
+      "pharmacology": "Cytoplasmbeta-Alanine metabolism Carnosinuria, carnosinemia GABA-Transaminase Deficiency Ureidopropionase Deficiency",
+      "literature_abstracts": []
+    },
+    "descriptions": {
+      "perplexity_description": "",
+      "hmdb_description": "",
+      "contextual_description": "",
+      "llm_description": "Metabolite: 1,3-Diaminopropane"
+    },
+    "biological_roles": [],
+    "database_ids": {
+      "hmdb_ids": {
+        "HMDB0000002": {
+          "primary": true,
+          "success": true
+        }
+      },
+      "pubchem_cids": {
+        "428": {
+          "hmdb_id": "HMDB0000002",
+          "primary": false,
+          "success": true
+        }
+      }
+    },
+    "data_sources": {
+      "perplexity_success": false,
+      "hmdb_success": true,
+      "pubchem_success": true,
+      "has_contextual_info": false,
+      "primary_source": "HMDB"
+    },
+    "enrichment_metadata": {
+      "enriched_timestamp": "2025-06-29T19:52:50.432446",
+      "enricher_version": "1.0.0"
+    },
+    "timing_summary": {
+      "total_enrichment_seconds": 0.0,
+      "sources": [
+        {
+          "source": "hmdb",
+          "elapsed_seconds": 6.62,
+          "from_cache": false
+        },
+        {
+          "source": "pubchem",
+          "elapsed_seconds": 1.8523170948028564,
+          "from_cache": false
+        }
+      ]
+    },
+    "hmdb_timing": {
+      "source": "hmdb",
+      "elapsed_seconds": 6.62,
+      "from_cache": false
+    },
+    "pubchem_timing": {
+      "source": "pubchem",
+      "elapsed_seconds": 1.8523170948028564,
+      "from_cache": false
+    },
+    "timing_data": {
+      "total_enrichment_seconds": 0.0,
+      "sources_by_hmdb": {
+        "HMDB0000002": {
+          "total_enrichment_seconds": 0.0,
+          "sources": [
+            {
+              "source": "hmdb",
+              "elapsed_seconds": 6.62,
+              "from_cache": false
+            },
+            {
+              "source": "pubchem",
+              "elapsed_seconds": 1.8523170948028564,
+              "from_cache": false
+            }
+          ]
+        }
+      }
+    },
+    "all_sources": [
+      {
+        "hmdb_id": "HMDB0000002",
+        "enhanced_name": "1,3-Diaminopropane",
+        "perplexity_success": false,
+        "hmdb_success": true,
+        "pubchem_success": true,
+        "primary_source": "HMDB",
+        "timing": {
+          "total_enrichment_seconds": 0.0,
+          "sources": [
+            {
+              "source": "hmdb",
+              "elapsed_seconds": 6.62,
+              "from_cache": false
+            },
+            {
+              "source": "pubchem",
+              "elapsed_seconds": 1.8523170948028564,
+              "from_cache": false
+            }
+          ]
+        }
+      }
+    ],
+    "database_ids_summary": {
+      "primary_hmdb_id": "HMDB0000002",
+      "primary_pubchem_cid": "428",
+      "hmdb_id_count": 1,
+      "pubchem_cid_count": 1
+    }
+  },
+  "2-Hydroxybutyric acid": {
+    "metabolite_name": "2-Hydroxybutyric acid",
+    "hmdb_id_list": [
+      "HMDB0000008"
+    ],
+    "original_data": {
+      "low_level": 9.046,
+      "high_level": 84.26,
+      "sd": NaN,
+      "reference": NaN
+    },
+    "original_name": "2-Hydroxybutyric acid",
+    "enhanced_name": "2-Hydroxybutyric acid",
+    "all_synonyms": [],
+    "chemical_classes": [],
+    "taxonomy": {
+      "kingdom": "",
+      "super_class": "",
+      "class": "",
+      "sub_class": "",
+      "direct_parent": ""
+    },
+    "chemical_properties": {
+      "iupac_name": "",
+      "common_name": "",
+      "molecular_formula": "C4H8O3",
+      "molecular_weight": "",
+      "canonical_smiles": "CCC(C(=O)O)O",
+      "inchi": "InChI=1S/C4H8O3/c1-2-3(5)4(6)7/h3,5H,2H2,1H3,(H,6,7)/t3-/m0/s1",
+      "pubchem_cid": "440864",
+      "compound_description": "(S)-2-hydroxybutyric acid is an optically active form of 2-hydroxybutyric acid having (S)-configuration. It is a 2-hydroxybutyric acid and a (2S)-2-hydroxy monocarboxylic acid. It is a conjugate acid of a (S)-2-hydroxybutyrate. It is an enantiomer of a (R)-2-hydroxybutyric acid. (S)-2-Hydroxybutyric acid has been reported in Caenorhabditis elegans with data available. 2-Hydroxybutyrate is a hydroxy fatty acid anion and conjugate base of 2-hydroxybutyric acid. 2-Hydroxybutyrate is a metabolite produced by the conversion of cystathionine to cysteine in the glutathione biosynthesis pathway. The amount of 2-hydroxybutyrate secreted in the urine can reflect changes in the rate of glutathione synthesis, which is altered by oxidative stress or toxin exposure. See also: 2-Hydroxybutyric Acid (annotation moved to).(2S)-2-hydroxybutanoic acidInChI=1S/C4H8O3/c1-2-3(5)4(6)7/h3,5H,2H2,1H3,(H,6,7)/t3-/m0/s1AFENDNXGAFYKQO-VKHMYHEASA-NCC[C@@H](C(=O)O)OC4H8O33347-90-8 3347-90-8 3347-90-8 3347-90-8 3347-90-8 3347-90-8628-477-68X9IM06H49CHEBI:50613DTXSID001312294HMDB0000008C05984LMFA010503421478C120002J57.683BQ27887417(S)-2-Hydroxybutyric acid (S)-2-hydroxybutanoic acid (2S)-2-hydroxybutanoic acid L-2-hydroxybutanoic acid L-alpha-hydroxybutyric acid L-alpha-hydroxybutanoic acid CHEBI:50613 DTXSID001312294 DTXCID001742093 628-477-6 3347-90-8 2-Hydroxybutyrate Butanoic acid, 2-hydroxy-, (2S)- 2-Hydroxybutyric acid, (+)- (S)-(+)-2-Hydroxybutanoic acid S-2-hydroxybutyric acid L-2-hydroxybutyric acid 2S-Hydroxybutanoic acid 2S-hydroxy-butanoic acid MFCD01318568 a-Hydroxybutyric acid (+)-2-hydroxybutyric acid 8X9IM06H49 Hydroxybutyric acid alpha-Hydroxybutanoate UNII-8X9IM06H49 a-Hydroxybutyrate a-Hydroxybutanoate 2-hydroxy-Butanoate DL-a-Hydroxybutyrate a-Hydroxy-n-butyrate 2-Hydroxy-n-butyrate a-Hydroxybutanoic acid DL-2-Hydroxybutanoate 2-hydroxy-DL-Butyrate alpha-hydroxy-n-butyrate DL-alpha-Hydroxybutyrate (RS)-2-Hydroxybutyrate DL-a-Hydroxybutyric acid a-Hydroxy-n-butyric acid 2-Hydroxy-n-butyric acid (S)-2-hydroxybutanoicacid 2-hydroxy-DL-Butyric acid DL-alpha-Hydroxybutyric acid (+)-2-Hydroxybutanoic acid SCHEMBL193026 (+)-alpha-hydroxybutyric acid SCHEMBL28813273 BBL103624 LMFA01050342 STL557434 AKOS015995014 CS-W019285 FH52287 HY-W018499 DS-12665 C05984 EN300-115522 (S)-a-Hydroxybutyric acid;L-2-Hydroxybutyric acid Q27887417 (S)-2-Hydroxybutyric acid, for chiral derivatization, >=97.0%2-Hydroxybutyric acid 2-hydroxybutanoate 2-HYDROXYBUTANOIC ACID alpha-Hydroxybutyrate 2-hydroxy-butanoic acid (S)-2-hydroxybutanoate alpha-Hydroxybutyric acid alpha-hydroxybutanoic acid (S)-2-Hydroxybutyricacid DL-2-Hydroxybutanoic acid AC1L9A2S (RS)-2-Hydroxybutyric acid alpha-Hydroxy-n-butyric acid dl-2-hydroxy-n-butyric acid (2R)-2-hydroxybutanoic acid (S)-2-Hydroxy-butanoic acid AFENDNXGAFYKQO-VKHMYHEASA-N C4H8O3 CTK4H0642 KS-00000JAI ZINC895970 Butanoic acid,2-hydroxy-, (2S)- ANW-73908 BBF-04738 CID440864 CB10945 LS30082 RP18824 S-2-Hydroxy-butyric acid - 25G 25g AJ-24220 SC-06416 AB0053379 TC-162653 FT-0625392 FT-0649270 FT-0773381 ST24026572 (S)-(+)-2-(2,6-Xylidinomethyl)pyrrolidine M-9770 347H908 A875281 I04-0904 I04-8537 600-15-7 (2S)-2-Hydroxybutanoic Acid; (+)-2-Hydroxy-n-butyric Acid; (+)-2-Hydroxybutanoic Acid; (+)-2-Hydroxybutyric Acid; (+)-alpha-Hydroxybutyric Acid; (2S)-2-Hydroxybutanoic Acid; (S)-(+)-2-Hydroxybutanoic Acid; (S)-2-Hydroxybutanoic Acid; (S)-2-Hydroxybutyric Acid; L-2-Hydroxybutyric Acid; L-alpha-Hydroxybutyric Acid; 20016-85-7 70371-56-1",
+      "biological_summary": "PubMed: 7482520, 19006102, 23940645, 24424155, 20156336, 19678709, 22148915, 25105552, 21773981, 25037050, 27015276, 27107423, 27275383, 28587349 Silke Matysik, Caroline Ivanne Le Roy, Gerhard Liebisch, Sandrine Paule Claus. Metabolomics of fecal samples: A practical consideration. Trends in Food Science & Technology. Vol. 57, Part B, Nov. 2016, p.244-255: http://www.sciencedirect.com/science/article/pii/S0924224416301984 PubMed: 115032, 7126379, 2480613, 17276036, 11877547, 12796220, 7595563, 20814316, 25004141, 24713860, 23823132, 2415198, 1694425, 7711000, 19390223, 22024767, 22007635, 21483431, 3741918, 11979513, 20206656, 436860, 19401681, 6184954, 26952797, 22800120, 24789758, 22944140, 22892715, 17440431, 25729574, 22257447 PubMed: 22494326 PubMed: 3252730, 663967, 12833386, 2994907, 17704099, 12698507, 17061063, 16925883, 22420377, 18059417, 22494326, 23159745, 23313728, 23535240, 24704061 The Merck Manual, 17th ed. Mark H. Beers, MD, Robert Berkow, MD, eds. Whitehouse Station, NJ: Merck Research Labs, 1999. PubMed: 23159745 PubMed: 17031479, 11959400, 8595727, 15361288, 9693263, 15465626, 15061359, 10494443, 11255442, 12498967, 16227558, 9720975, 12111441, 16244393, 8356878, 12391605, 8478958, 21292280, 20858978, 21474939, 20523031, 11314776, 1716470, 23857558 PubMed: 23857558 PubMed: 23857558 PubMed: 22079328 OMIM 238331 Mordechai, Hien, and David S. Wishart PubMed: 11978597, 6688766",
+      "pharmacology": "Placenta ProstateCytoplasm ExtracellularMalonic Aciduria Malonyl-coa decarboxylase deficiency Methylmalonic Aciduria Due to Cobalamin-Related Disorders Propanoate metabolism",
+      "literature_abstracts": []
+    },
+    "descriptions": {
+      "perplexity_description": "",
+      "hmdb_description": "",
+      "contextual_description": "",
+      "llm_description": "Metabolite: 2-Hydroxybutyric acid"
+    },
+    "biological_roles": [],
+    "database_ids": {
+      "hmdb_ids": {
+        "HMDB0000008": {
+          "primary": false,
+          "success": false
+        }
+      },
+      "pubchem_cids": {
+        "440864": {
+          "hmdb_id": "HMDB0000008",
+          "primary": true,
+          "success": true
+        }
+      }
+    },
+    "data_sources": {
+      "perplexity_success": false,
+      "hmdb_success": false,
+      "pubchem_success": true,
+      "has_contextual_info": false,
+      "primary_source": "PubChem"
+    },
+    "enrichment_metadata": {
+      "enriched_timestamp": "2025-06-29T19:52:50.432714",
+      "enricher_version": "1.0.0"
+    },
+    "timing_summary": {
+      "total_enrichment_seconds": 0.0,
+      "sources": [
+        {
+          "source": "hmdb",
+          "elapsed_seconds": 30.01,
+          "from_cache": false,
+          "success": false,
+          "error": true
+        },
+        {
+          "source": "pubchem",
+          "elapsed_seconds": 1.5650887489318848,
+          "from_cache": false
+        }
+      ]
+    },
+    "hmdb_timing": {
+      "source": "hmdb",
+      "elapsed_seconds": 30.01,
+      "from_cache": false,
+      "success": false,
+      "error": true
+    },
+    "pubchem_timing": {
+      "source": "pubchem",
+      "elapsed_seconds": 1.5650887489318848,
+      "from_cache": false
+    },
+    "timing_data": {
+      "total_enrichment_seconds": 0.0,
+      "sources_by_hmdb": {
+        "HMDB0000008": {
+          "total_enrichment_seconds": 0.0,
+          "sources": [
+            {
+              "source": "hmdb",
+              "elapsed_seconds": 30.01,
+              "from_cache": false,
+              "success": false,
+              "error": true
+            },
+            {
+              "source": "pubchem",
+              "elapsed_seconds": 1.5650887489318848,
+              "from_cache": false
+            }
+          ]
+        }
+      }
+    },
+    "all_sources": [
+      {
+        "hmdb_id": "HMDB0000008",
+        "enhanced_name": "2-Hydroxybutyric acid",
+        "perplexity_success": false,
+        "hmdb_success": false,
+        "pubchem_success": true,
+        "primary_source": "PubChem",
+        "timing": {
+          "total_enrichment_seconds": 0.0,
+          "sources": [
+            {
+              "source": "hmdb",
+              "elapsed_seconds": 30.01,
+              "from_cache": false,
+              "success": false,
+              "error": true
+            },
+            {
+              "source": "pubchem",
+              "elapsed_seconds": 1.5650887489318848,
+              "from_cache": false
+            }
+          ]
+        }
+      }
+    ],
+    "database_ids_summary": {
+      "primary_hmdb_id": "HMDB0000008",
+      "primary_pubchem_cid": "440864",
+      "hmdb_id_count": 1,
+      "pubchem_cid_count": 1
+    }
+  }
+}

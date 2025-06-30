@@ -38,7 +38,8 @@ def main():
 
     # Initialize enricher
     enricher = MetaboliteDataEnricher(
-        cache_file=os.path.join(args.cache_dir, 'enricher_cache.pkl')
+        cache_file=os.path.join(args.cache_dir, 'enricher_cache.pkl'),
+        refresh_cache=True
     )
     
     # Set output directory

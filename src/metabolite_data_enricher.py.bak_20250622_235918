@@ -10,12 +10,13 @@ Separated from diet advice generation for better modularity and maintainability.
 """
 
 import argparse
-import json
 import os
-import re
-import sys
+import json
 import time
 import copy
+import logging
+import pickle
+import requests
 import pandas as pd
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple, Union
@@ -25,6 +26,7 @@ from dotenv import load_dotenv
 import requests
 from bs4 import BeautifulSoup
 import pickle
+from src.enhanced_hmdb_lookup import EnhancedHMDBLookup
 
 # Configure logging
 # Create logs directory if it doesn't exist
@@ -62,31 +64,253 @@ PERPLEXITY_FALLBACK_MODELS = [
 ]
 
 class MetaboliteDataEnricher:
-    """Class for enriching metabolite information from multiple data sources."""
-
-    def __init__(self, cache_file: str = CACHE_FILE, use_perplexity_first: bool = False, refresh_cache: bool = False, force_pubchem: bool = False, include_health_conditions: bool = False, include_food_recommendations: bool = False):
-        self.cache_file = cache_file
-        self.cache = self.load_cache()
+    """
+    Class for enriching metabolite data with additional information from HMDB and PubChem.
+    """
+    
+    def __init__(self, refresh_cache=False):
+        """
+        Initialize the MetaboliteDataEnricher.
+        
+        Args:
+            refresh_cache (bool): Whether to refresh the cache
+        """
         self.session = requests.Session()
-        self.session.headers.update({
-            'User-Agent': 'Mozilla/5.0 (Metabolite Research Tool) AppleWebKit/537.36'
-        })
+        self.cache = {}
+        self.refresh_cache = refresh_cache
+        self.logger = logging.getLogger('metabolite_data_enricher')
         self.enriched_data = {}
         self.enriched_data_by_name = {}
-        self.use_perplexity_first = use_perplexity_first
-        self.refresh_cache = refresh_cache
-        self.force_pubchem = force_pubchem
-        self.include_health_conditions = include_health_conditions
-        self.include_food_recommendations = include_food_recommendations
-        self.openrouter_api_key = os.getenv('OPENROUTER_API_KEY')
+        self.hmdb_lookup = EnhancedHMDBLookup()
+        
+        # Load cache if it exists
+        cache_file = 'data/metabolite_enricher_cache.pkl'
+        if os.path.exists(cache_file) and not refresh_cache:
+            try:
+                with open(cache_file, 'rb') as f:
+                    self.cache = pickle.load(f)
+                self.logger.info(f"Loaded cache with {len(self.cache)} entries")
+            except Exception as e:
+                self.logger.error(f"Error loading cache: {e}")
+                self.cache = {}
+        self.use_perplexity_first = False  # Default to not using Perplexity first
+        self.use_perplexity_first = False  # Default to not using Perplexity first
+        self.include_health_conditions = True  # Include health conditions by default
+        self.include_food_sources = True  # Include food sources by default
+        self.include_biological_functions = True  # Include biological functions by default
+        self.include_clinical_significance = True  # Include clinical significance by default
+        self.include_pathways = True  # Include pathways by default
+        self.include_references = True  # Include references by default
+        self.include_chemical_properties = True  # Include chemical properties by default
+        self.include_synonyms = True  # Include synonyms by default
+        self.include_pubchem_synonyms = True  # Include PubChem synonyms by default
+        self.include_food_recommendations = True  # Include food recommendations by default
+        self.include_supplement_recommendations = True  # Include supplement recommendations by default
+        self.include_lifestyle_recommendations = True  # Include lifestyle recommendations by default
+        self.include_medical_advice = False  # Do not include medical advice by default
+        self.include_research_findings = True  # Include research findings by default
+        self.openrouter_api_key = os.environ.get('OPENROUTER_API_KEY', '')  # Get OpenRouter API key from environment
+        self.perplexity_api_key = os.environ.get('PERPLEXITY_API_KEY', '')  # Get Perplexity API key from environment
+        self.openai_api_key = os.environ.get('OPENAI_API_KEY', '')  # Get OpenAI API key from environment
+        self.anthropic_api_key = os.environ.get('ANTHROPIC_API_KEY', '')  # Get Anthropic API key from environment
+        self.max_retries = 3  # Maximum number of retries for API calls
+        self.retry_delay = 2  # Delay between retries in seconds
+    
+    def _extract_pubchem_synonyms(self, cid: str) -> list:
+        """
+        Extract synonyms for a compound from PubChem using the PUG View API.
+        
+        Args:
+            cid: PubChem Compound ID
+            
+        Returns:
+            List of synonyms
+        """
+        if not cid:
+            return []
+        
+        try:
+            url = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/synonyms/compound/{cid}/JSON"
+            response = self.session.get(url)
+            
+            if response.status_code != 200:
+                logger.warning(f"Failed to get PubChem synonyms for CID {cid}: {response.status_code}")
+                return []
+            
+            data = response.json()
+            synonyms = []
+            
+            if "InformationList" in data and "Information" in data["InformationList"]:
+                for info in data["InformationList"]["Information"]:
+                    if "Synonym" in info:
+                        synonyms.extend(info["Synonym"])
+            
+            logger.info(f"Extracted {len(synonyms)} synonyms from PubChem for CID {cid}")
+            return synonyms
+        
+        except Exception as e:
+            logger.error(f"Error extracting PubChem synonyms for CID {cid}: {e}")
+            return []
+    
+    def get_pubchem_info(self, metabolite_name: str, hmdb_id: str = "") -> Dict[str, Any]:
+        """
+        Get additional information from PubChem API.
+
+        Args:
+            metabolite_name (str): Name of the metabolite
+            hmdb_id (str): HMDB ID for cache key
+
+        Returns:
+            Dict containing additional chemical information
+        """
+        # Start timing
+        start_time = time.time()
+        
+        cache_key = f"pubchem_{hmdb_id}_{metabolite_name}"
+        if cache_key in self.cache and not self.refresh_cache:
+            logger.debug(f"Using cached PubChem data for {metabolite_name} (HMDB ID: {hmdb_id})")
+            result = self.cache[cache_key]
+            # Add timing information for cached results
+            if 'timing' not in result:
+                result['timing'] = {
+                    'source': 'pubchem',
+                    'elapsed_seconds': 0.0,
+                    'from_cache': True
+                }
+            return result
         
         if self.refresh_cache:
-            logger.info("Cache refresh mode enabled - will bypass cache for Perplexity API calls")
+            logger.debug(f"Bypassing cache for PubChem data for {metabolite_name} (HMDB ID: {hmdb_id})")
 
-        if self.use_perplexity_first and not self.openrouter_api_key:
-            logger.warning("OPENROUTER_API_KEY not found. Falling back to HMDB scraping only.")
-            self.use_perplexity_first = False
+        try:
+            data = None
+            
+            # First try searching by HMDB ID if available
+            if hmdb_id and hmdb_id != 'NOID00000':
+                try:
+                    # Try direct lookup by HMDB ID using xref endpoint (most reliable method)
+                    search_url = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/xref/RegistryID/{hmdb_id}/JSON"
+                    logger.info(f"Searching PubChem by HMDB ID: {hmdb_id} for {metabolite_name}")
+                    response = self.session.get(search_url, timeout=30)
+                    response.raise_for_status()
+                    data = response.json()
+                    logger.debug(f"PubChem HMDB ID search response for {hmdb_id}: {response.text[:200]}...")
+                except Exception as hmdb_search_error:
+                    logger.warning(f"Failed to find {metabolite_name} (HMDB ID: {hmdb_id}) in PubChem by HMDB ID, falling back to name search: {hmdb_search_error}")
+            
+            # If HMDB ID search failed or wasn't available, try by name
+            if data is None:
+                try:
+                    from urllib.parse import quote
+                    search_url = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/{quote(metabolite_name)}/JSON"
+                    logger.info(f"Searching PubChem by name: {metabolite_name}")
+                    response = self.session.get(search_url, timeout=30)
+                    response.raise_for_status()
+                    data = response.json()
+                    logger.debug(f"PubChem name search response for {metabolite_name}: {response.text[:200]}...")
+                except Exception as name_search_error:
+                    logger.error(f"Error fetching PubChem data for {metabolite_name}: {name_search_error}")
+                    # Return empty result with error info
+                    result = {
+                        'pubchem_cid': '',
+                        'molecular_formula': '',
+                        'molecular_weight': '',
+                        'success': False,
+                        'source': 'PubChem',
+                        'error': str(name_search_error)
+                    }
+                    self.cache[cache_key] = result
+                    return result
 
+            info = {
+                'pubchem_cid': '',
+                'molecular_formula': '',
+                'molecular_weight': '',
+                'canonical_smiles': '',
+                'inchi': '',
+                'pubchem_synonyms': [],
+                'compound_description': '',
+                'biological_summary': '',
+                'pharmacology': '',
+                'literature_abstracts': [],
+                'source': 'PubChem',
+                'timestamp': datetime.now().isoformat(),
+                'success': True
+            }
+
+            if 'PC_Compounds' in data and data['PC_Compounds']:
+                compound = data['PC_Compounds'][0]
+
+                # Extract CID
+                cid = ''
+                if 'id' in compound and 'id' in compound['id'] and 'cid' in compound['id']['id']:
+                    cid = str(compound['id']['id']['cid'])
+                    info['pubchem_cid'] = cid
+                    
+                    # Fetch and store PubChem synonyms
+                    try:
+                        pubchem_synonyms = self._extract_pubchem_synonyms(cid)
+                        if pubchem_synonyms:
+                            info['pubchem_synonyms'] = pubchem_synonyms
+                            # Also add to all_synonyms
+                            if 'all_synonyms' not in info:
+                                info['all_synonyms'] = []
+                            for synonym in pubchem_synonyms:
+                                if synonym not in info['all_synonyms']:
+                                    info['all_synonyms'].append(synonym)
+                    except Exception as e:
+                        logger.error(f"Error extracting PubChem synonyms for CID {cid}: {e}")
+                    
+                    # Fetch additional PubChem data (descriptions, summaries, etc.)
+                    try:
+                        self._fetch_pubchem_additional_data(cid, info)
+                    except Exception as e:
+                        logger.error(f"Error fetching additional PubChem data for CID {cid}: {e}")
+
+                # Extract molecular formula
+                if 'props' in compound:
+                    for prop in compound['props']:
+                        if 'urn' in prop and 'label' in prop['urn'] and prop['urn']['label'] == 'Molecular Formula':
+                            if 'value' in prop and 'sval' in prop['value']:
+                                info['molecular_formula'] = prop['value']['sval']
+                        
+                        elif 'urn' in prop and 'label' in prop['urn'] and prop['urn']['label'] == 'Molecular Weight':
+                            if 'value' in prop and 'fval' in prop['value']:
+                                info['molecular_weight'] = str(prop['value']['fval'])
+                        
+                        elif 'urn' in prop and 'label' in prop['urn'] and prop['urn']['label'] == 'SMILES' and 'name' in prop['urn'] and prop['urn']['name'] == 'Canonical':
+                            if 'value' in prop and 'sval' in prop['value']:
+                                info['canonical_smiles'] = prop['value']['sval']
+                        
+                        elif 'urn' in prop and 'label' in prop['urn'] and prop['urn']['label'] == 'InChI':
+                            if 'value' in prop and 'sval' in prop['value']:
+                                info['inchi'] = prop['value']['sval']
+
+            # Add timing information
+            elapsed_time = time.time() - start_time
+            info['timing'] = {
+                'source': 'pubchem',
+                'elapsed_seconds': elapsed_time,
+                'from_cache': False
+            }
+            
+            # Cache the result
+            self.cache[cache_key] = info
+            return info
+            
+        except Exception as e:
+            logger.error(f"Error in get_pubchem_info for {metabolite_name}: {e}")
+            # Return empty result with error info
+            result = {
+                'pubchem_cid': '',
+                'molecular_formula': '',
+                'molecular_weight': '',
+                'success': False,
+                'source': 'PubChem',
+                'error': str(e)
+            }
+            self.cache[cache_key] = result
+            return result
     def load_cache(self) -> Dict:
         """Load cached metabolite data to avoid repeated API calls."""
         if Path(self.cache_file).exists():
@@ -99,15 +323,19 @@ class MetaboliteDataEnricher:
                 logger.warning(f"Failed to load cache: {e}")
         return {}
 
+
     def save_cache(self):
         """Save cache to disk."""
         try:
             Path(self.cache_file).parent.mkdir(parents=True, exist_ok=True)
+            # Make sure the HMDB lookup cache is synchronized with our cache
+            self.cache.update(self.hmdb_lookup.cache)
             with open(self.cache_file, 'wb') as f:
                 pickle.dump(self.cache, f)
             logger.info(f"Saved cache with {len(self.cache)} entries")
         except Exception as e:
             logger.error(f"Failed to save cache: {e}")
+
 
     def get_perplexity_metabolite_info(self, hmdb_id: str, metabolite_name: str) -> Dict[str, Any]:
         """
@@ -453,9 +681,10 @@ Focus on providing accurate, scientific information from reliable biochemical an
 
         return info
 
+
     def get_hmdb_info(self, hmdb_id: str) -> Dict[str, Any]:
         """
-        Scrape HMDB metabolite page for detailed information.
+        Get HMDB metabolite information using the EnhancedHMDBLookup class.
 
         Args:
             hmdb_id (str): HMDB ID (e.g., 'HMDB0000687')
@@ -463,550 +692,17 @@ Focus on providing accurate, scientific information from reliable biochemical an
         Returns:
             Dict containing synonyms, classes, and description
         """
-        # Start timing
-        start_time = time.time()
+        logger.info(f"Getting HMDB info for {hmdb_id} using EnhancedHMDBLookup")
         
-        if hmdb_id in self.cache:
-            result = self.cache[hmdb_id]
-            # Add timing information for cached results
-            if 'timing' not in result:
-                result['timing'] = {
-                    'source': 'hmdb',
-                    'elapsed_seconds': 0.0,
-                    'from_cache': True
-                }
-            return result
-
-        # Skip NOID metabolites for HMDB lookup
-        if 'NOID' in hmdb_id:
-            return self._create_empty_hmdb_info(hmdb_id)
-
-        try:
-            url = f"https://hmdb.ca/metabolites/{hmdb_id}"
-            logger.info(f"Fetching HMDB data for {hmdb_id}")
-
-            response = self.session.get(url, timeout=30)
-            response.raise_for_status()
-
-            soup = BeautifulSoup(response.content, 'html.parser')
-
-            # Extract information
-            info = {
-                'hmdb_id': hmdb_id,
-                'synonyms': self._extract_synonyms(soup),
-                'chemical_classes': self._extract_chemical_classes(soup),
-                'description': self._extract_description(soup),
-                'iupac_name': self._extract_iupac_name(soup),
-                'common_name': self._extract_common_name(soup),
-                'kingdom': self._extract_taxonomy_field(soup, 'Kingdom'),
-                'super_class': self._extract_taxonomy_field(soup, 'Super Class'),
-                'class': self._extract_taxonomy_field(soup, 'Class'),
-                'sub_class': self._extract_taxonomy_field(soup, 'Sub Class'),
-                'direct_parent': self._extract_taxonomy_field(soup, 'Direct Parent'),
-                'source': 'HMDB',
-                'timestamp': datetime.now().isoformat(),
-                'success': True
-            }
-
-            # Calculate time taken
-            end_time = time.time()
-            elapsed_time = end_time - start_time
-            
-            # Add timing information
-            info['timing'] = {
-                'source': 'hmdb',
-                'elapsed_seconds': round(elapsed_time, 2),
-                'from_cache': False
-            }
-            
-            logger.debug(f"HMDB fetch took {elapsed_time:.2f} seconds for {hmdb_id}")
-            
-            # Cache the result
+        # Use the EnhancedHMDBLookup to get HMDB data
+        info = self.hmdb_lookup.get_hmdb_info(hmdb_id)
+        
+        # Update our cache with the result from EnhancedHMDBLookup
+        if hmdb_id not in self.cache and info.get('success', False):
             self.cache[hmdb_id] = info
+            
+        return info
 
-            # Rate limiting
-            time.sleep(RATE_LIMIT_DELAY)
-
-            return info
-
-        except Exception as e:
-            logger.error(f"Error fetching HMDB data for {hmdb_id}: {e}")
-            empty_info = self._create_empty_hmdb_info(hmdb_id)
-            empty_info['error'] = str(e)
-            
-            # Calculate time taken even for errors
-            end_time = time.time()
-            elapsed_time = end_time - start_time
-            
-            # Add timing information
-            empty_info['timing'] = {
-                'source': 'hmdb',
-                'elapsed_seconds': round(elapsed_time, 2),
-                'from_cache': False,
-                'success': False,
-                'error': True
-            }
-            
-            self.cache[hmdb_id] = empty_info
-            return empty_info
-
-    def get_pubchem_info(self, metabolite_name: str, hmdb_id: str = "") -> Dict[str, Any]:
-        """
-        Get additional information from PubChem API.
-
-        Args:
-            metabolite_name (str): Name of the metabolite
-            hmdb_id (str): HMDB ID for cache key
-
-        Returns:
-            Dict containing additional chemical information
-        """
-        # Start timing
-        start_time = time.time()
-        
-        cache_key = f"pubchem_{hmdb_id}_{metabolite_name}"
-        if cache_key in self.cache and not self.refresh_cache:
-            logger.debug(f"Using cached PubChem data for {metabolite_name} (HMDB ID: {hmdb_id})")
-            result = self.cache[cache_key]
-            # Add timing information for cached results
-            if 'timing' not in result:
-                result['timing'] = {
-                    'source': 'pubchem',
-                    'elapsed_seconds': 0.0,
-                    'from_cache': True
-                }
-            return result
-        
-        if self.refresh_cache:
-            logger.debug(f"Bypassing cache for PubChem data for {metabolite_name} (HMDB ID: {hmdb_id})")
-
-        try:
-            data = None
-            
-            # First try searching by HMDB ID if available
-            if hmdb_id and hmdb_id != 'NOID00000':
-                try:
-                    # Try direct lookup by HMDB ID using xref endpoint (most reliable method)
-                    search_url = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/xref/RegistryID/{hmdb_id}/JSON"
-                    logger.info(f"Searching PubChem by HMDB ID: {hmdb_id} for {metabolite_name}")
-                    response = self.session.get(search_url, timeout=30)
-                    response.raise_for_status()
-                    data = response.json()
-                    logger.debug(f"PubChem HMDB ID search response for {hmdb_id}: {response.text[:200]}...")
-                except Exception as hmdb_search_error:
-                    logger.warning(f"Failed to find {metabolite_name} (HMDB ID: {hmdb_id}) in PubChem by HMDB ID, falling back to name search: {hmdb_search_error}")
-            
-            # If HMDB ID search failed or wasn't available, try by name
-            if data is None:
-                try:
-                    from urllib.parse import quote
-                    search_url = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/{quote(metabolite_name)}/JSON"
-                    logger.info(f"Searching PubChem by name: {metabolite_name}")
-                    response = self.session.get(search_url, timeout=30)
-                    response.raise_for_status()
-                    data = response.json()
-                    logger.debug(f"PubChem name search response for {metabolite_name}: {response.text[:200]}...")
-                except Exception as name_search_error:
-                    logger.error(f"Error fetching PubChem data for {metabolite_name}: {name_search_error}")
-                    # Return empty result with error info
-                    result = {
-                        'pubchem_cid': '',
-                        'molecular_formula': '',
-                        'molecular_weight': '',
-                        'success': False,
-                        'source': 'PubChem',
-                        'error': str(name_search_error)
-                    }
-                    self.cache[cache_key] = result
-                    return result
-
-            info = {
-                'pubchem_cid': '',
-                'molecular_formula': '',
-                'molecular_weight': '',
-                'canonical_smiles': '',
-                'inchi': '',
-                'pubchem_synonyms': [],
-                'compound_description': '',
-                'biological_summary': '',
-                'pharmacology': '',
-                'literature_abstracts': [],
-                'source': 'PubChem',
-                'timestamp': datetime.now().isoformat(),
-                'success': True
-            }
-
-            if 'PC_Compounds' in data and data['PC_Compounds']:
-                compound = data['PC_Compounds'][0]
-
-                # Extract CID
-                cid = ''
-                if 'id' in compound and 'id' in compound['id'] and 'cid' in compound['id']['id']:
-                    cid = str(compound['id']['id']['cid'])
-                    info['pubchem_cid'] = cid
-                    
-                    # Fetch and store PubChem synonyms
-                    try:
-                        pubchem_synonyms = self._extract_pubchem_synonyms(cid)
-                        if pubchem_synonyms:
-                            info['pubchem_synonyms'] = pubchem_synonyms
-                            # Also add to all_synonyms
-                            if 'all_synonyms' not in info:
-                                info['all_synonyms'] = []
-                            for synonym in pubchem_synonyms:
-                                if synonym not in info['all_synonyms']:
-                                    info['all_synonyms'].append(synonym)
-                    except Exception as e:
-                        logger.error(f"Error extracting PubChem synonyms for CID {cid}: {e}")
-                    
-                    # Fetch additional PubChem data (descriptions, summaries, etc.)
-                    try:
-                        self._fetch_pubchem_additional_data(cid, info)
-                    except Exception as e:
-                        logger.error(f"Error fetching additional PubChem data for CID {cid}: {e}")
-
-                # Extract molecular formula
-                if 'props' in compound:
-                    for prop in compound['props']:
-                        if 'urn' in prop and 'label' in prop['urn'] and prop['urn']['label'] == 'Molecular Formula':
-                            if 'value' in prop and 'sval' in prop['value']:
-                                info['molecular_formula'] = prop['value']['sval']
-                        
-                        elif 'urn' in prop and 'label' in prop['urn'] and prop['urn']['label'] == 'Molecular Weight':
-                            if 'value' in prop and 'fval' in prop['value']:
-                                info['molecular_weight'] = str(prop['value']['fval'])
-                        
-                        elif 'urn' in prop and 'label' in prop['urn'] and prop['urn']['label'] == 'SMILES' and 'name' in prop['urn'] and prop['urn']['name'] == 'Canonical':
-                            if 'value' in prop and 'sval' in prop['value']:
-                                info['canonical_smiles'] = prop['value']['sval']
-                        
-                        elif 'urn' in prop and 'label' in prop['urn'] and prop['urn']['label'] == 'InChI':
-                            if 'value' in prop and 'sval' in prop['value']:
-                                info['inchi'] = prop['value']['sval']
-
-            # Add timing information
-            elapsed_time = time.time() - start_time
-            info['timing'] = {
-                'source': 'pubchem',
-                'elapsed_seconds': elapsed_time,
-                'from_cache': False
-            }
-            
-            # Cache the result
-            self.cache[cache_key] = info
-            return info
-            
-        except Exception as e:
-            logger.error(f"Error in get_pubchem_info for {metabolite_name}: {e}")
-            # Return empty result with error info
-            result = {
-                'pubchem_cid': '',
-                'molecular_formula': '',
-                'molecular_weight': '',
-                'success': False,
-                'source': 'PubChem',
-                'error': str(e)
-            }
-            self.cache[cache_key] = result
-            return result
-
-    def _extract_pubchem_synonyms(self, cid: str) -> list:
-        """
-        Extract synonyms for a compound from PubChem using the PUG View API.
-        
-        Args:
-            cid: PubChem Compound ID
-            
-        Returns:
-            List of synonyms
-        """
-        if not cid:
-            return []
-        
-        try:
-            url = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/{cid}/JSON?heading=Synonyms"
-            response = self.session.get(url, timeout=30)
-            
-            if response.status_code != 200:
-                logger.warning(f"Failed to get PubChem synonyms for CID {cid}: {response.status_code}")
-                return []
-            
-            data = response.json()
-            synonyms = []
-            
-            if "Record" in data and "Section" in data["Record"]:
-                for section in data["Record"]["Section"]:
-                    if section.get("TOCHeading") == "Names and Identifiers":
-                        for subsection in section.get("Section", []):
-                            if subsection.get("TOCHeading") == "Synonyms":
-                                for info in subsection.get("Information", []):
-                                    if "Value" in info and "StringWithMarkup" in info["Value"]:
-                                        for markup in info["Value"]["StringWithMarkup"]:
-                                            if "String" in markup:
-                                                synonyms.append(markup["String"])
-                                    elif "Value" in info and "String" in info["Value"]:
-                                        synonyms.append(info["Value"]["String"])
-            if not synonyms:
-                logger.debug(f"No synonyms found in PubChem response for CID {cid}. Full response structure: {json.dumps(data, indent=2)[:1000]}...")
-            
-            # Clean up synonyms and remove duplicates
-            cleaned_synonyms = []
-            seen = set()
-            for syn in synonyms:
-                cleaned = syn.strip()
-                if cleaned and cleaned.lower() not in seen and len(cleaned) < 100:
-                    cleaned_synonyms.append(cleaned)
-                    seen.add(cleaned.lower())
-            
-            logger.info(f"Extracted {len(cleaned_synonyms)} unique synonyms from PubChem for CID {cid}")
-            return cleaned_synonyms[:20]  # Limit to top 20 synonyms
-        
-        except Exception as e:
-            logger.error(f"Error extracting PubChem synonyms for CID {cid}: {e}")
-            return []
-
-    def _fetch_pubchem_additional_data(self, cid: str, info: Dict[str, Any]) -> None:
-        """
-        Fetch additional data from PubChem PUG-View API.
-        
-        Args:
-            cid (str): PubChem Compound ID
-            info (Dict): Dictionary to update with additional information
-        """
-        try:
-            # Use PUG-View to get additional information
-            pugview_url = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/{cid}/JSON"
-            logger.info(f"Fetching additional PubChem data for CID {cid}")
-            
-            response = self.session.get(pugview_url, timeout=30)
-            response.raise_for_status()
-            
-            data = response.json()
-            logger.debug(f"PubChem PUG-View response for CID {cid}: {str(data)[:200]}...")
-            
-            # Extract sections from the PUG-View data
-            if 'Record' in data and 'Section' in data['Record']:
-                sections = data['Record']['Section']
-                
-                # Debug: Log all available sections
-                logger.debug(f"Available PubChem sections for CID {cid}:")
-                for i, section in enumerate(sections):
-                    section_name = section.get('TOCHeading', 'Unknown')
-                    logger.debug(f"  Section {i}: {section_name}")
-                    if 'Section' in section:
-                        for j, subsection in enumerate(section['Section']):
-                            subsection_name = subsection.get('TOCHeading', 'Unknown')
-                            logger.debug(f"    Subsection {j}: {subsection_name}")
-                
-                # Process each section to extract relevant information
-                for section in sections:
-                    section_name = section.get('TOCHeading', '')
-                    
-                    # Extract compound description from Names and Identifiers or Record Description
-                    if section_name == 'Names and Identifiers':
-                        description = self._extract_pubchem_section_text(section, 'Description')
-                        if not description:
-                            # Try to get any text content from this section
-                            description = self._extract_any_text_from_section(section)
-                        if description:
-                            info['compound_description'] = description
-                    
-                    # Extract biological summary from various biological sections
-                    elif section_name in ['Biological Test Results', 'Drug and Medication Information']:
-                        biological_text = self._extract_any_text_from_section(section)
-                        if biological_text and not info.get('biological_summary'):
-                            info['biological_summary'] = biological_text
-                    
-                    # Extract pharmacology information from Pharmacology and Biochemistry
-                    elif section_name == 'Pharmacology and Biochemistry':
-                        pharmacology_text = self._extract_any_text_from_section(section)
-                        if pharmacology_text:
-                            info['pharmacology'] = pharmacology_text
-                    
-                    # Extract literature information from Literature section
-                    elif section_name == 'Literature':
-                        abstracts = self._extract_pubchem_literature_enhanced(section)
-                        if abstracts:
-                            info['literature_abstracts'] = abstracts[:5]  # Limit to 5 abstracts
-                    
-                    # Also try Associated Disorders and Diseases for biological context
-                    elif section_name == 'Associated Disorders and Diseases':
-                        disease_text = self._extract_any_text_from_section(section)
-                        if disease_text and not info.get('biological_summary'):
-                            info['biological_summary'] = disease_text
-            
-            logger.info(f"Successfully fetched additional PubChem data for CID {cid}")
-            
-        except Exception as e:
-            logger.error(f"Error fetching additional PubChem data for CID {cid}: {e}")
-
-    def _extract_pubchem_section_text(self, section: Dict, target_heading: str) -> str:
-        """
-        Extract text content from a specific section in PubChem PUG-View data.
-        
-        Args:
-            section (Dict): Section data from PUG-View
-            target_heading (str): Heading to look for
-            
-        Returns:
-            str: Extracted text content
-        """
-        result = ""
-        
-        # Check if this section matches the target heading
-        if section.get('TOCHeading', '') == target_heading and 'Information' in section:
-            for info in section['Information']:
-                if 'Value' in info and 'StringWithMarkup' in info['Value']:
-                    for markup in info['Value']['StringWithMarkup']:
-                        if 'String' in markup:
-                            result += markup['String'] + " "
-        
-        # Check subsections recursively
-        if 'Section' in section:
-            for subsection in section['Section']:
-                subsection_text = self._extract_pubchem_section_text(subsection, target_heading)
-                if subsection_text:
-                    result = subsection_text
-                    break
-        
-        return result.strip()
-
-    def _extract_pubchem_literature(self, section: Dict) -> List[Dict[str, str]]:
-        """
-        Extract literature abstracts from PubChem PUG-View data.
-        
-        Args:
-            section (Dict): Literature section data from PUG-View
-            
-        Returns:
-            List[Dict[str, str]]: List of abstracts with title, authors, journal, and text
-        """
-        abstracts = []
-        
-        # Process literature section
-        if 'Section' in section:
-            for subsection in section['Section']:
-                if subsection.get('TOCHeading', '') == 'Citations' and 'Information' in subsection:
-                    for info in subsection['Information']:
-                        if 'Reference' in info:
-                            reference = info['Reference']
-                            abstract = {
-                                'title': reference.get('Title', ''),
-                                'authors': ', '.join(reference.get('Author', [])),
-                                'journal': reference.get('Journal', ''),
-                                'year': reference.get('Year', ''),
-                                'abstract': ''
-                            }
-                            
-                            # Try to get the abstract text if available
-                            if 'Value' in info and 'StringWithMarkup' in info['Value']:
-                                for markup in info['Value']['StringWithMarkup']:
-                                    if 'String' in markup:
-                                        abstract['abstract'] += markup['String'] + " "
-                            
-                            abstracts.append(abstract)
-        
-        return abstracts
-
-    def _extract_pubchem_literature_enhanced(self, section: Dict) -> List[Dict[str, str]]:
-        """
-        Extract literature abstracts from PubChem PUG-View data (enhanced).
-        
-        Args:
-            section (Dict): Literature section data from PUG-View
-            
-        Returns:
-            List[Dict[str, str]]: List of abstracts with title, authors, journal, and text
-        """
-        abstracts = []
-        
-        # Process literature section - target actual subsections found in PubChem
-        if 'Section' in section:
-            for subsection in section['Section']:
-                subsection_name = subsection.get('TOCHeading', '')
-                
-                # Target the actual literature subsections found in PubChem
-                if subsection_name in ['Consolidated References', 'NLM Curated PubMed Citations', 
-                                     'Springer Nature References', 'Thieme References', 'Wiley References']:
-                    
-                    if 'Information' in subsection:
-                        for info in subsection['Information']:
-                            abstract = {}
-                            
-                            # Extract reference information if available
-                            if 'Reference' in info:
-                                reference = info['Reference']
-                                abstract.update({
-                                    'title': reference.get('Title', ''),
-                                    'authors': ', '.join(reference.get('Author', [])),
-                                    'journal': reference.get('Journal', ''),
-                                    'year': str(reference.get('Year', '')),
-                                    'doi': reference.get('DOI', ''),
-                                    'pubmed_id': reference.get('PMID', ''),
-                                    'abstract': ''
-                                })
-                            
-                            # Extract text content from Value field
-                            if 'Value' in info:
-                                if 'StringWithMarkup' in info['Value']:
-                                    for markup in info['Value']['StringWithMarkup']:
-                                        if 'String' in markup:
-                                            if not abstract.get('abstract'):
-                                                abstract['abstract'] = markup['String']
-                                            else:
-                                                abstract['abstract'] += " " + markup['String']
-                                
-                                # Also check for direct string values
-                                elif 'String' in info['Value']:
-                                    if not abstract.get('abstract'):
-                                        abstract['abstract'] = info['Value']['String']
-                            
-                            # Extract title and other metadata from Name field if Reference not available
-                            if 'Name' in info and not abstract.get('title'):
-                                abstract['title'] = info['Name']
-                            
-                            # Only add if we have some meaningful content
-                            if abstract.get('title') or abstract.get('abstract') or abstract.get('pubmed_id'):
-                                abstracts.append(abstract)
-                                
-                            # Limit to prevent excessive data
-                            if len(abstracts) >= 10:
-                                break
-                
-                # Break if we've collected enough abstracts
-                if len(abstracts) >= 10:
-                    break
-        
-        return abstracts
-
-    def _extract_any_text_from_section(self, section: Dict) -> str:
-        """
-        Extract any text content from a PubChem PUG-View section.
-        
-        Args:
-            section (Dict): Section data from PUG-View
-            
-        Returns:
-            str: Extracted text content
-        """
-        result = ""
-        
-        # Check if this section has text content
-        if 'Information' in section:
-            for info in section['Information']:
-                if 'Value' in info and 'StringWithMarkup' in info['Value']:
-                    for markup in info['Value']['StringWithMarkup']:
-                        if 'String' in markup:
-                            result += markup['String'] + " "
-        
-        # Check subsections recursively
-        if 'Section' in section:
-            for subsection in section['Section']:
-                subsection_text = self._extract_any_text_from_section(subsection)
-                if subsection_text:
-                    result += subsection_text
-        
-        return result.strip()
 
     def enrich_metabolite(self, hmdb_id: str, metabolite_name: str) -> Dict[str, Any]:
         """
@@ -1156,33 +852,19 @@ Focus on providing accurate, scientific information from reliable biochemical an
         """Extract synonyms from HMDB page."""
         synonyms = []
 
-        # Look for synonyms in specific table row
-        synonym_row = soup.find('td', string=re.compile(r'Synonyms', re.I))
-        if synonym_row:
-            value_cell = synonym_row.find_next_sibling('td')
-            if value_cell:
-                # Extract all text from the cell, splitting by common delimiters
-                text = value_cell.get_text(separator=';')
+        # Look for synonyms in various sections
+        synonym_sections = soup.find_all(['td', 'div'], string=re.compile(r'synonym', re.I))
+        for section in synonym_sections:
+            next_element = section.find_next_sibling()
+            if next_element:
+                text = next_element.get_text(strip=True)
                 if text:
+                    # Split by common delimiters
                     parts = re.split(r'[;,\n]', text)
                     for part in parts:
                         clean_part = part.strip()
                         if clean_part and len(clean_part) > 1 and len(clean_part) < 100:
                             synonyms.append(clean_part)
-
-        # Alternative approach: look for a specific section
-        if not synonyms:
-            synonym_sections = soup.find_all(['td', 'div'], string=re.compile(r'synonym', re.I))
-            for section in synonym_sections:
-                next_element = section.find_next_sibling()
-                if next_element:
-                    text = next_element.get_text(strip=True)
-                    if text:
-                        parts = re.split(r'[;,\n]', text)
-                        for part in parts:
-                            clean_part = part.strip()
-                            if clean_part and len(clean_part) > 1 and len(clean_part) < 100:
-                                synonyms.append(clean_part)
 
         # Remove duplicates and clean up
         unique_synonyms = []
@@ -1371,11 +1053,21 @@ Focus on providing accurate, scientific information from reliable biochemical an
             'success': False
         }
 
-    def _get_best_value(self, values: List[str]) -> str:
+    def _get_best_value(self, values: List[Any]) -> str:
         """Get the best non-empty value from a list of values."""
         for value in values:
-            if value and value.strip():
-                return value.strip()
+            if value is not None:
+                # Handle different types
+                if isinstance(value, str):
+                    if value.strip():
+                        return value.strip()
+                elif isinstance(value, (int, float)):
+                    return str(value)
+                else:
+                    # For other types, convert to string if it has a value
+                    str_value = str(value)
+                    if str_value and str_value != 'None':
+                        return str_value
         return ''
 
     def _get_best_chemical_classes(self, hmdb_info: Dict, perplexity_info: Dict) -> List[str]:
@@ -1475,6 +1167,7 @@ Focus on providing accurate, scientific information from reliable biochemical an
 
         return ' | '.join(desc_parts)
 
+
     def process_metabolites_from_csv(self, csv_file: str = "input/normal_ranges.csv",
                                    sample_size: Optional[int] = None) -> Dict[str, Dict[str, Any]]:
         """
@@ -1505,12 +1198,12 @@ Focus on providing accurate, scientific information from reliable biochemical an
                 hmdb_ids_combined = row['hmdb']
                 metabolite_name = row['chemical_name']
                 
-                # Check if the HMDB_ID field contains multiple IDs separated by spaces
+                # Check if the hmdb field contains multiple IDs separated by spaces
                 if isinstance(hmdb_ids_combined, str):
                     hmdb_ids = hmdb_ids_combined.split()
                 else:
                     # Handle non-string values (like NaN)
-                    logger.warning(f"Non-string HMDB_ID value for {metabolite_name}: {hmdb_ids_combined}")
+                    logger.warning(f"Non-string HMDB value for {metabolite_name}: {hmdb_ids_combined}")
                     continue
                     
                 logger.info(f"Processing {metabolite_name} ({hmdb_ids_combined}) [{idx+1}/{len(df)}]")
@@ -1547,6 +1240,11 @@ Focus on providing accurate, scientific information from reliable biochemical an
                     
                     # Add HMDB ID to the by-name structure's list
                     enriched_data_by_name[metabolite_name]['hmdb_id_list'].append(hmdb_id)
+                    
+                    # Store the complete enriched data for this HMDB ID
+                    if 'hmdb_enriched_data' not in enriched_data_by_name[metabolite_name]:
+                        enriched_data_by_name[metabolite_name]['hmdb_enriched_data'] = {}
+                    enriched_data_by_name[metabolite_name]['hmdb_enriched_data'][hmdb_id] = copy.deepcopy(enriched_metabolite)
                     
                     # If this is the first HMDB ID for this metabolite, initialize the structure
                     if len(enriched_data_by_name[metabolite_name]['hmdb_id_list']) == 1:
@@ -1757,6 +1455,7 @@ Focus on providing accurate, scientific information from reliable biochemical an
             logger.error(f"Error processing metabolites from CSV: {e}")
             raise
 
+
     def save_enriched_data_to_json(self, output_file=None):
         """Save the enriched data to a JSON file."""
         if output_file is None:
@@ -1774,6 +1473,7 @@ Focus on providing accurate, scientific information from reliable biochemical an
         except Exception as e:
             logger.error(f"Error saving enriched data to JSON: {e}")
             return False
+
 
     def save_enriched_data_by_name_to_json(self, output_file: str = "data/metabolite_enriched_data_by_name.json") -> bool:
         """
@@ -1848,6 +1548,7 @@ Focus on providing accurate, scientific information from reliable biochemical an
         except Exception as e:
             logger.error(f"Error saving enriched data by name to JSON: {e}")
             return False
+
 
     def save_enriched_data_to_csv(self, output_file: str = ENRICHED_CSV_FILE) -> bool:
         """

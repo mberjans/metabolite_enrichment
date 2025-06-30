@@ -1,0 +1,294 @@
+{
+  "1,3-Diaminopropane": {
+    "metabolite_name": "1,3-Diaminopropane",
+    "hmdb_id_list": [
+      "HMDB0000002"
+    ],
+    "original_data": {
+      "low_level": 0.01,
+      "high_level": 0.07,
+      "sd": NaN,
+      "reference": NaN
+    },
+    "original_name": "1,3-Diaminopropane",
+    "enhanced_name": "1,3-Diaminopropane",
+    "all_synonyms": [
+      "1.3-diaminopropane",
+      "1,3-diamino propane",
+      "Z104478068",
+      "1,3-Diaminopropane",
+      "1,3 -diaminopropane",
+      "Q161498",
+      "a,W-Propanediamine",
+      "1,3-Propane-diamine",
+      "1, 3-Diaminopropane",
+      "1,3-propandiamine",
+      "1,3-Propanediamine;Trimethylenediamine",
+      "1,3-Diaminopropane Dihydrobromide, >/=98%",
+      "1,3-Trimethylenediamine",
+      "1,3-Propylenediamine",
+      "1,3-Propane-1,1,3,3-d4-diamine(9CI)",
+      "1,3-Propanediamine",
+      "Propane-1,3-diamine",
+      "1,3-Diaminepropane",
+      "3-Aminopropylamine",
+      "1,3-diamino-N-Propane"
+    ],
+    "chemical_classes": [],
+    "taxonomy": {
+      "kingdom": "",
+      "super_class": "",
+      "class": "",
+      "sub_class": "",
+      "direct_parent": ""
+    },
+    "chemical_properties": {
+      "iupac_name": "propane-1,3-diamine",
+      "common_name": "",
+      "molecular_formula": "C3H10N2",
+      "molecular_weight": "74.13",
+      "canonical_smiles": "C(CN)CN",
+      "inchi": "InChI=1S/C3H10N2/c4-2-1-3-5/h1-5H2",
+      "pubchem_cid": "428",
+      "compound_description": "1,3-diaminopropane is a water-white mobile liquid with an odor of amine. (NTP, 1992) Trimethylenediamine is an alkane-alpha,omega-diamine comprising a propane skeleton with amino substituents at positions 1 and 3. It has a role as a reagent, a human metabolite and a mouse metabolite. It is a conjugate base of a trimethylenediaminium. 1,3-Diaminopropane has been reported in Cyanidium caldarium, Medicago sativa, and other organisms with data available. 1,3-Diaminopropane is a metabolite found in or produced by Saccharomyces cerevisiae.",
+      "biological_summary": "",
+      "pharmacology": "",
+      "literature_abstracts": []
+    },
+    "descriptions": {
+      "perplexity_description": "",
+      "hmdb_description": "1,3-Diaminopropane, also known as DAP or trimethylenediamine, belongs to the class of organic compounds known as monoalkylamines. These are organic compounds containing a primary aliphatic amine group. 1,3-Diaminopropane is a stable, flammable, and highly hygroscopic fluid. It is a polyamine that is normally quite toxic if swallowed, inhaled, or absorbed through the skin. It is a catabolic byproduct of spermidine. It is also a precursor in the enzymatic synthesis of beta-alanine. 1,3-Diaminopropane is involved in the arginine/proline metabolic pathways and the beta-alanine metabolic pathway. 1,3-Diaminopropane has been detected, but not quantified in, several different foods, such as cassava, shiitakes, oyster mushrooms, muscadine grapes, and cinnamons. This could make 1,3-diaminopropane a potential biomarker for the consumption of these foods.",
+      "contextual_description": "",
+      "llm_description": "Metabolite: 1,3-Diaminopropane | \nAlso known as: 1,3-Propylenediamine, a,W-Propanediamine, Propane-1,3-diamine | \nDescription: 1,3-Diaminopropane, also known as DAP or trimethylenediamine, belongs to the class of organic compounds known as monoalkylamines."
+    },
+    "biological_roles": [],
+    "database_ids": {
+      "hmdb_ids": {
+        "HMDB0000002": {
+          "primary": false,
+          "success": false
+        }
+      },
+      "pubchem_cids": {
+        "428": {
+          "hmdb_id": "HMDB0000002",
+          "primary": true,
+          "success": true
+        }
+      }
+    },
+    "data_sources": {
+      "perplexity_success": false,
+      "hmdb_success": false,
+      "pubchem_success": true,
+      "has_contextual_info": false,
+      "primary_source": "PubChem"
+    },
+    "enrichment_metadata": {
+      "enriched_timestamp": "2025-06-24T12:37:33.421697",
+      "enricher_version": "1.0.0"
+    },
+    "timing_summary": {
+      "total_enrichment_seconds": 3.59,
+      "sources": [
+        {
+          "source": "pubchem",
+          "elapsed_seconds": 1.58,
+          "from_cache": false
+        }
+      ]
+    },
+    "pubchem_timing": {
+      "source": "pubchem",
+      "elapsed_seconds": 1.58,
+      "from_cache": false
+    },
+    "timing_data": {
+      "total_enrichment_seconds": 3.59,
+      "sources_by_hmdb": {
+        "HMDB0000002": {
+          "total_enrichment_seconds": 3.59,
+          "sources": [
+            {
+              "source": "pubchem",
+              "elapsed_seconds": 1.58,
+              "from_cache": false
+            }
+          ]
+        }
+      }
+    },
+    "all_sources": [
+      {
+        "hmdb_id": "HMDB0000002",
+        "enhanced_name": "1,3-Diaminopropane",
+        "perplexity_success": false,
+        "hmdb_success": false,
+        "pubchem_success": true,
+        "primary_source": "PubChem",
+        "timing": {
+          "total_enrichment_seconds": 3.59,
+          "sources": [
+            {
+              "source": "pubchem",
+              "elapsed_seconds": 1.58,
+              "from_cache": false
+            }
+          ]
+        }
+      }
+    ],
+    "database_ids_summary": {
+      "primary_hmdb_id": "HMDB0000002",
+      "primary_pubchem_cid": "428",
+      "hmdb_id_count": 1,
+      "pubchem_cid_count": 1
+    }
+  },
+  "2-Hydroxybutyric acid": {
+    "metabolite_name": "2-Hydroxybutyric acid",
+    "hmdb_id_list": [
+      "HMDB0000008"
+    ],
+    "original_data": {
+      "low_level": 9.046,
+      "high_level": 84.26,
+      "sd": NaN,
+      "reference": NaN
+    },
+    "original_name": "2-Hydroxybutyric acid",
+    "enhanced_name": "2-Hydroxybutyric acid",
+    "all_synonyms": [
+      "L-alpha-Hydroxybutyrate",
+      "L-2-Hydroxybutyric acid",
+      "S-2-hydroxybutyric acid",
+      "CS-W019285",
+      "L-a-Hydroxybutanoate",
+      "L-\u0391-hydroxybutanoic acid",
+      "L-a-Hydroxybutanoic acid",
+      "(S)-2-Hydroxybutanoic acid",
+      "(S)-2-Hydroxybutanoate",
+      "L-\u0391-hydroxybutyrate",
+      "L-2-Hydroxybutanoic acid",
+      "L-alpha-Hydroxybutanoic acid",
+      "L-2-Hydroxybutyrate",
+      "L-a-Hydroxybutyric acid",
+      "L-alpha-Hydroxybutanoate",
+      "L-\u0391-hydroxybutanoate",
+      "L-\u0391-hydroxybutyric acid",
+      "L-2-Hydroxybutanoate",
+      "L-a-Hydroxybutyrate",
+      "L-alpha-Hydroxybutyric acid"
+    ],
+    "chemical_classes": [],
+    "taxonomy": {
+      "kingdom": "",
+      "super_class": "",
+      "class": "",
+      "sub_class": "",
+      "direct_parent": ""
+    },
+    "chemical_properties": {
+      "iupac_name": "(2S)-2-hydroxybutanoic acid",
+      "common_name": "",
+      "molecular_formula": "C4H8O3",
+      "molecular_weight": "104.10",
+      "canonical_smiles": "CC[C@@H](C(=O)O)O",
+      "inchi": "InChI=1S/C4H8O3/c1-2-3(5)4(6)7/h3,5H,2H2,1H3,(H,6,7)/t3-/m0/s1",
+      "pubchem_cid": "440864",
+      "compound_description": "(S)-2-hydroxybutyric acid is an optically active form of 2-hydroxybutyric acid having (S)-configuration. It is a 2-hydroxybutyric acid and a (2S)-2-hydroxy monocarboxylic acid. It is a conjugate acid of a (S)-2-hydroxybutyrate. It is an enantiomer of a (R)-2-hydroxybutyric acid. (S)-2-Hydroxybutyric acid has been reported in Caenorhabditis elegans with data available. 2-Hydroxybutyrate is a hydroxy fatty acid anion and conjugate base of 2-hydroxybutyric acid. 2-Hydroxybutyrate is a metabolite produced by the conversion of cystathionine to cysteine in the glutathione biosynthesis pathway. The amount of 2-hydroxybutyrate secreted in the urine can reflect changes in the rate of glutathione synthesis, which is altered by oxidative stress or toxin exposure. See also: 2-Hydroxybutyric Acid (annotation moved to).",
+      "biological_summary": "",
+      "pharmacology": "",
+      "literature_abstracts": []
+    },
+    "descriptions": {
+      "perplexity_description": "",
+      "hmdb_description": "2-Hydroxybutyric acid (CAS: 600-15-7), also known as alpha-hydroxybutyrate, is an organic acid derived from alpha-ketobutyrate. alpha-Ketobutyrate is produced by amino acid catabolism (threonine and methionine) and glutathione anabolism (cysteine formation pathway) and is metabolized into propionyl-CoA and carbon dioxide (PMID: 20526369). 2-Hydroxybutyric acid is formed as a byproduct from the formation of alpha-ketobutyrate via a reaction catalyzed by lactate dehydrogenase (LDH) or alpha-hydroxybutyrate dehydrogenase (alphaHBDH). alpha-Hydroxybutyric acid is primarily produced in mammalian hepatic tissues that catabolize L-threonine or synthesize glutathione. Oxidative stress or detoxification of xenobiotics in the liver can dramatically increase the rate of hepatic glutathione synthesis. Under such metabolic stress conditions, supplies of L-cysteine for glutathione synthesis become limiting, so homocysteine is diverted from the transmethylation pathway (which forms methionine) into the transsulfuration pathway (which forms cystathionine). alpha-Ketobutyrate is released as a byproduct when cystathionine is cleaved into cysteine that is incorporated into glutathione. Chronic shifts in the rate of glutathione synthesis may be reflected by urinary excretion of 2-hydroxybutyrate. 2-Hydroxybutyrate is an early marker for both insulin resistance and impaired glucose regulation that appears to arise due to increased lipid oxidation and oxidative stress (PMID: 20526369). 2-Hydroxybutyric acid is often found in the urine of patients suffering from lactic acidosis and ketoacidosis. 2-Hydroxybutyric acid generally appears at high concentrations in situations related to deficient energy metabolism (e.g. birth asphyxia) and also in inherited metabolic diseases affecting the central nervous system during neonatal development, such as \"cerebral\" lactic acidosis, glutaric aciduria type II, dihydrolipoyl dehydrogenase (E3) deficiency, and propionic acidemia. More recently it has been noted that elevated levels of alpha-hydroxybutyrate in the plasma is a good marker for early-stage type II diabetes (PMID: 19166731). It was concluded from studies done in the mid-1970s that an increased NADH2/NAD ratio was the most important factor for the production of 2-hydroxybutyric acid (PMID: 168632).",
+      "contextual_description": "",
+      "llm_description": "Metabolite: 2-Hydroxybutyric acid | \nAlso known as: (S)-2-Hydroxybutanoate, L-\u0391-hydroxybutanoate, L-alpha-Hydroxybutanoate | \nDescription: 2-Hydroxybutyric acid (CAS: 600-15-7), also known as alpha-hydroxybutyrate, is an organic acid derived from alpha-ketobutyrate."
+    },
+    "biological_roles": [],
+    "database_ids": {
+      "hmdb_ids": {
+        "HMDB0000008": {
+          "primary": false,
+          "success": false
+        }
+      },
+      "pubchem_cids": {
+        "440864": {
+          "hmdb_id": "HMDB0000008",
+          "primary": true,
+          "success": true
+        }
+      }
+    },
+    "data_sources": {
+      "perplexity_success": false,
+      "hmdb_success": false,
+      "pubchem_success": true,
+      "has_contextual_info": false,
+      "primary_source": "PubChem"
+    },
+    "enrichment_metadata": {
+      "enriched_timestamp": "2025-06-24T12:37:36.056781",
+      "enricher_version": "1.0.0"
+    },
+    "timing_summary": {
+      "total_enrichment_seconds": 2.63,
+      "sources": [
+        {
+          "source": "pubchem",
+          "elapsed_seconds": 0.62,
+          "from_cache": false
+        }
+      ]
+    },
+    "pubchem_timing": {
+      "source": "pubchem",
+      "elapsed_seconds": 0.62,
+      "from_cache": false
+    },
+    "timing_data": {
+      "total_enrichment_seconds": 2.63,
+      "sources_by_hmdb": {
+        "HMDB0000008": {
+          "total_enrichment_seconds": 2.63,
+          "sources": [
+            {
+              "source": "pubchem",
+              "elapsed_seconds": 0.62,
+              "from_cache": false
+            }
+          ]
+        }
+      }
+    },
+    "all_sources": [
+      {
+        "hmdb_id": "HMDB0000008",
+        "enhanced_name": "2-Hydroxybutyric acid",
+        "perplexity_success": false,
+        "hmdb_success": false,
+        "pubchem_success": true,
+        "primary_source": "PubChem",
+        "timing": {
+          "total_enrichment_seconds": 2.63,
+          "sources": [
+            {
+              "source": "pubchem",
+              "elapsed_seconds": 0.62,
+              "from_cache": false
+            }
+          ]
+        }
+      }
+    ],
+    "database_ids_summary": {
+      "primary_hmdb_id": "HMDB0000008",
+      "primary_pubchem_cid": "440864",
+      "hmdb_id_count": 1,
+      "pubchem_cid_count": 1
+    }
+  }
+}

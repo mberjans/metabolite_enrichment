@@ -1,0 +1,168 @@
+{
+  "HMDB0000123": {
+    "hmdb_id": "HMDB0000123",
+    "original_name": "Glucose",
+    "enhanced_name": "Glucose",
+    "all_synonyms": [
+      "Synonym1",
+      "Synonym2"
+    ],
+    "chemical_classes": [],
+    "taxonomy": {
+      "kingdom": "",
+      "super_class": "",
+      "class": "",
+      "sub_class": "",
+      "direct_parent": ""
+    },
+    "chemical_properties": {
+      "iupac_name": "",
+      "common_name": "",
+      "molecular_formula": "C2H5NO2",
+      "molecular_weight": "",
+      "canonical_smiles": "C(C(=O)O)N",
+      "inchi": "InChI=1S/C2H5NO2/c3-1-2(4)5/h1,3H2,(H,4,5)",
+      "pubchem_cid": "750",
+      "compound_description": "Glycine appears as white crystals. (NTP, 1992) Glycine is the simplest (and the only achiral) proteinogenic amino acid, with a hydrogen atom as its side chain. It has a role as a nutraceutical, a hepatoprotective agent, an EC 2.1.2.1 (glycine hydroxymethyltransferase) inhibitor, a NMDA receptor agonist, a micronutrient, a fundamental metabolite and a neurotransmitter. It is an alpha-amino acid, a serine family amino acid and a proteinogenic amino acid. It is a conjugate base of a glycinium. It is a conjugate acid of a glycinate. It is a tautomer of a glycine zwitterion. A non-essential amino acid. It is found primarily in gelatin and silk fibroin and used therapeutically as a nutrient. It is also a fast inhibitory neurotransmitter. Glycine is a metabolite found in or produced by Escherichia coli (strain K12, MG1655). Glycine has been reported in Microchloropsis, Pinus densiflora, and other organisms with data available. Glycine is a non-essential, non-polar, non-optical, glucogenic amino acid. Glycine, an inhibitory neurotransmitter in the CNS, triggers chloride ion influx via ionotropic receptors, thereby creating an inhibitory post-synaptic potential. In contrast, this agent also acts as a co-agonist, along with glutamate, facilitating an excitatory potential at the glutaminergic N-methyl-D-aspartic acid (NMDA) receptors. Glycine is an important component and precursor for many macromolecules in the cells. GLYCINE is a small molecule drug with a maximum clinical trial phase of IV (across all indications) and has 12 investigational indications. Glycine is a simple, nonessential amino acid, although experimental animals show reduced growth on low-glycine diets. The average adult ingests 3 to 5 grams of glycine daily. Glycine is involved in the body's production of DNA, phospholipids and collagen, and in release of energy. Glycine levels are effectively measured in plasma in both normal patients and those with inborn errors of glycine metabolism. Nonketotic hyperglycinaemia (OMIM 606899) is an autosomal recessive condition caused by deficient enzyme activity of the glycine cleavage enzyme system (EC 2.1.1.10). The glycine cleavage enzyme system comprises four proteins: P-, T-, H- and L-proteins (EC 1.4.4.2, EC 2.1.2.10 and EC 1.8.1.4 for P-, T- and L-proteins). Mutations have been described in the GLDC (OMIM 238300), AMT (OMIM 238310), and GCSH (OMIM 238330) genes encoding the P-, T-, and H-proteins respectively. The glycine cleavage system catalyses the oxidative conversion of glycine into carbon dioxide and ammonia, with the remaining one-carbon unit transferred to folate as methylenetetrahydrofolate. It is the main catabolic pathway for glycine and it also contributes to one-carbon metabolism. Patients with a deficiency of this enzyme system have increased glycine in plasma, urine and cerebrospinal fluid (CSF) with an increased CSF: plasma glycine ratio.  (A3412). t is also a fast inhibitory neurotransmitter. A non-essential amino acid. It is found primarily in gelatin and silk fibroin and used therapeutically as a nutrient. It is also a fast inhibitory neurotransmitter. See also: Glycine Hydrochloride (has salt form); Amlisimod (monomer of); ProSol (FDA NDC: 0338-0499) (component of) ... View More ...2-aminoacetic acidInChI=1S/C2H5NO2/c3-1-2(4)5/h1,3H2,(H,4,5)DHMQDGOQFOQNFH-UHFFFAOYSA-NC(C(=O)O)NC2H5NO2 C2H5NO2 C2H5NO256-40-6 56-40-6 25718-94-9 56-40-6 56-40-6 18875-39-3 56-40-6 56-40-6 56-40-6 56-40-6 56-40-6 56-40-6 56-40-6 56-40-6 56-40-6 56-40-6 56-40-6 56-40-615743-44-9 (mono-potassium salt) 17829-66-2 (cobalt salt) 29728-27-6 (monoammonium salt) 32817-15-5 (copper salt) 33242-26-1 (calcium salt) 35947-07-0 (calcium salt (2:1)) 513-29-1 (sulfate (3:1)) 6000-43-7 (hydrochloride) 6000-44-8 (mono-hydrochloride salt) 63183-41-5 (hydrochloride hydrogen carbonate) 71295-98-2 (phosphate (1:1)) 7490-95-1 (hydrochloride (2:1) 7490-95-1 (hydrochloride (2:1))1119449-36-3, 1153953-88-8, 1173020-11-5, 1196157-78-4, 52955-63-2, 57678-19-0, 848646-45-7, 87867-94-5 1119449-36-3, 1153953-88-8, 1173020-11-5, 1196157-78-4, 52955-63-2, 57678-19-0, 848646-45-7, 87867-94-5 1119449-36-3, 1153953-88-8, 1196157-78-4, 52955-63-2, 57678-19-0, 848646-45-7, 87867-94-5200-272-2 654-407-9TE7660XO1CCHEBI:15428CHEMBL773DB00145DTXSID90206673287 3287HMDB00001231421C00037 D00011 C2240737085C524J1.163K760120 25936PA449789YXX31QZ3CNMJ4919Q106345678 Q620730GlycineAcid, Aminoacetic Aminoacetic Acid Calcium Salt Glycine Cobalt Salt Glycine Copper Salt Glycine Glycine Glycine Carbonate (1:1), Monosodium Salt Glycine Carbonate (2:1), Monolithium Salt Glycine Carbonate (2:1), Monopotassium Salt Glycine Carbonate (2:1), Monosodium Salt Glycine Hydrochloride Glycine Hydrochloride (2:1) Glycine Phosphate Glycine Phosphate (1:1) Glycine Sulfate (3:1) Glycine, Calcium Salt Glycine, Calcium Salt (2:1) Glycine, Cobalt Salt Glycine, Copper Salt Glycine, Monoammonium Salt Glycine, Monopotassium Salt Glycine, Monosodium Salt Glycine, Sodium Hydrogen Carbonate Hydrochloride, Glycine Monoammonium Salt Glycine Monopotassium Salt Glycine Monosodium Salt Glycine Phosphate, Glycine Salt Glycine, Monoammonium Salt Glycine, Monopotassium Salt Glycine, Monosodiumglycine 56-40-6 Glycocoll Glycolixir Glicoamin Glycosthene Aciport Padil Hampshire glycine Amitone Leimzucker Aminoazijnzuur Glycine, non-medical Sucre de gelatine Glicina Glycinum GLY (IUPAC abbrev) Glyzin FEMA No. 3287 Acido aminoacetico Glycinum [INN-Latin] Acide aminoacetique Glicina [INN-Spanish] Acidum aminoaceticum gly Glykokoll Aminoessigsaeure Hgly CCRIS 5915 HSDB 495 Acide aminoacetique [INN-French] Acido aminoacetico [INN-Spanish] Acidum aminoaceticum [INN-Latin] AI3-04085 NSC 25936 GLYCINE 1.5% IN PLASTIC CONTAINER H2N-CH2-COOH EINECS 200-272-2 UNII-TE7660XO1C NSC-25936 TE7660XO1C DTXSID9020667 CHEBI:15428 Glycine [USP:INN] NSC25936 DTXCID90667 EC 200-272-2 Glycine (USP:INN) Glycinum (INN-Latin) Glicina (INN-Spanish) GLYCINE (II) GLYCINE [II] GLYCINE (MART.) GLYCINE [MART.] GLYCINE (USP-RS) GLYCINE [USP-RS] GLYCINE (EP MONOGRAPH) GLYCINE [EP MONOGRAPH] GLYCINE (USP MONOGRAPH) GLYCINE [USP MONOGRAPH] Acide aminoacetique (INN-French) Acido aminoacetico (INN-Spanish) Acidum aminoaceticum (INN-Latin) Aminoessigsaure Treating Gingivitis Toothpaste Repair Cracked Teeth Toothpaste CAREDO Treating Gingivitis Toothpastes CAREDO Repair Cracked Teeth Toothpastes CAREDO Treating Gingivitis Toothpastes100g CAREDO Repair Cracked Teeth Toothpastes100g 200-272-2 g 2-Aminoacetic acid aminoacetic acid Aminoethanoic acid H-Gly-OH L-Glycine Acetic acid, amino- Gyn-hydralin Corilin Glycine [INN] 25718-94-9 MFCD00008131 amino-Acetic acid [14C]glycine CHEMBL773 Glycine iron sulphate (1:1) aminoacetate Athenon 2-aminoacetate NCGC00024503-01 Glycine, free base CAS-56-40-6 Glycine, labeled with carbon-14 AMINOACETIC ACID 1.5% IN PLASTIC CONTAINER Aminoethanoate 18875-39-3 amino-Acetate 2-aminoaceticacid [3H]glycine Glycine USP grade Glycine (Standard) Glycine - EP Glycine, EP/USP H-Gly L-Gly Gly-CO Gly-OH [14C]-glycine Corilin (Salt/Mix) Tocris-0219 Glycine (H-Gly-OH) GLYCINE [VANDF] NH2CH2COOH GLYCINE [FHFI] GLYCINE [HSDB] Glycine, technical grade GLYCINE [FCC] GLYCINE [JAN] GLYCINE [MI] Glycine (JP18/USP) Glycine, 99%, FCC GLYCINE [WHO-DD] Biomol-NT_000195 bmse000089 bmse000977 WLN: Z1VQ SCHEMBL6163 Gly-253 SCHEMBL62594 GLYCINE [GREEN BOOK] GTPL727 AB-131/40217813 GLYCINE [ORANGE BOOK] SCHEMBL208601 SCHEMBL887085 Glycine, Electrophoresis Grade BPBio1_001222 GTPL4084 GTPL4635 SCHEMBL1770702 SCHEMBL3928487 SCHEMBL5201284 SCHEMBL9866384 GLYCINE-1-13C-15N BDBM18133 HY-Y0966R AZD4282 MSK1408 Glycine, >=99.0% (NT) Glycine, 98.5-101.5% Pharmakon1600-01300021 Glycine 1000 microg/mL in Water 2-Aminoacetic acid;Aminoacetic acid BCP25965 CS-B1641 EAA89676 HY-Y0966 Glycine, ACS reagent, >=98.5% Tox21_113575 Glycine, 99%, natural, FCC, FG HB0299 NSC760120 s4821 STL194276 Glycine, purum, >=98.5% (NT) Glycine, tested according to Ph.Eur. AKOS000119626 Glycine, for electrophoresis, >=99% Tox21_113575_1 CCG-266010 DB00145 FG02717 FG71510 NSC-760120 Glycine - Absolute carbon isotope ratio Glycine, BioUltra, >=99.0% (NT) Glycine, BioXtra, >=99% (titration) SERINE IMPURITY B [EP IMPURITY] Glycine, SAJ special grade, >=99.0% NCGC00024503-02 NCGC00024503-03 BP-31024 FG175750 Glycine, Vetec(TM) reagent grade, 98% DB-029870 G0099 G0317 Glycine, ReagentPlus(R), >=99% (HPLC) NS00001575 EN300-19731 C00037 C22407 D00011 D70890 M03001 L001246 Q620730 SR-01000597729 C-Terminal [mycofactocin precursor peptide]-glycine Glycine, certified reference material, TraceCERT(R) SR-01000597729-1 BRD-K72369578-001-04-1 Q27115084 B72BA06C-60E9-4A83-A24A-A2D7F465BB65 F2191-0197 Glycine, European Pharmacopoeia (EP) Reference Standard Z955123660 Glycine, BioUltra, for molecular biology, >=99.0% (NT) Glycine, from non-animal source, suitable for cell culture InChI=1/C2H5NO2/c3-1-2(4)5/h1,3H2,(H,4,5 Glycine, United States Pharmacopeia (USP) Reference Standard Glycine, Pharmaceutical Secondary Standard; Certified Reference Material Glycine, analytical standard, for nitrogen determination according to Kjeldahl method Glycine, from non-animal source, meets EP, JP, USP testing specifications, suitable for cell culture, >=98.5% Glycine, meets analytical specification of Ph. Eur., BP, USP, 99-101% (based on anhydrous substance)Glycin polyglycine Glycine-d5 adenine Polyglycine II Aminoethansaure Glycokoll (1-13c)glycinato glycyl radical Glycine-N,N,O-d3 Unknown Ligand Mixture Name (15N)Glycine Glycine; Glycine phosphate glycine USP 6-Aminopurine HCl Glycine Technical ansolysenbitartrate Acid, Aminoacetic glycine-13c Phosphate, Glycine Carbonocyanidic Acid Cobalt Salt Glycine Copper Salt Glycine Glycine hydrochloride Glycine, food grade L-alpha-amino acids 2,2-dialkylglycines Calcium Salt Glycine GLYCINE, ACS Glycine-13C2 Glycine, cobalt salt Glycine, Copper Salt GLUTAMIC ACID Glycine 1 M solution Glycine-2,2-d2 Hydrochloride, Glycine Glycine, Calcium Salt POLY-L-GLYCINE Monosodium Salt Glycine C2H5NO2 <1-14C>Glycin Glycine, monosodium salt H-PHE-PYRROLIDIDE Glycine-13C2,15N Salt Glycine, Monosodium Monoammonium Salt Glycine Aminoacetic acid,medicinal an alpha amino acid ester Glycine (JP15/USP) H-DL-GLA-OH Glycine Sulfate (3:1) Glycine, monoammonium salt Monopotassium Salt Glycine glycine (aminoacetic acid) D0M8AB Salt Glycine, Monoammonium Glycine Phosphate (1:1) Glycine, monopotassium salt AC1L19XW AC1Q28JW Salt Glycine, Monopotassium DHMQDGOQFOQNFH-UHFFFAOYSA-N H-Gly-2-Chlorotrityl resin Glycine, homopolymer (VAN) Glycine; (Aminoacetic acid) Glycine; 2-Aminoacetic acid KSC205S9D Glycine [for Electrophoresis] Glycine Hydrochloride (2:1) Glycine-UL-14C hydrochloride AC1Q53O0 CID750 Adenine hydrochloride hemihydrate Glycine, 98% - 1KG 1kg Glycine, Calcium Salt (2:1) GLYCINE-2-13C-15N Buffer Concentrate, pH 11.01 CTK1A5991 CID:750 GLYCINE (REFERENCE GRADE) N-Fmoc-N-(3-methylbutyl)glycine (C2-H5-N-O2)x- C2-H5-N-O2 KST-1A2919 KST-1A8102 Glycine, Sodium Hydrogen Carbonate KS-000002MW ZINC4658552 Glycine 98.5% extra pure 250gm ANW-32505 AR-1A0345 AR-1A0532 Glycine-Absolute carbon isotope ratio LS-218 Glycine, 98% - 100G 100g ACN-033249 AM81781 BAT-014293 CS-O-00823 RP08772 RTC-066530 GLYCINE ETHYL ESTER HYDROCHLORIDE Glycine, ACS, 98.5% min. 100g AJ-51834 AK-77854 AN-24439 BC204500 BR-77854 Glycine, 99.5% - 100G 100g SC-26884 Glycine, 0.2M buffer solution, pH 2.5 Glycine, 0.2M buffer solution, pH 3.0 Glycine, 0.2M buffer solution, pH 3.5 SID:312525266 AB1002628 Glycine Carbonate (1:1), Monosodium Salt Glycine Carbonate (2:1), Monolithium Salt Glycine Carbonate (2:1), Monosodium Salt ST2416448 TC-066530 A6808 A7190 FT-0600491 FT-0669038 FT-0776513 Glycine Carbonate (2:1), Monopotassium Salt A20662 Aminoacetic acid; Aminoethanoic acid; Glycocoll M-6155 S04-0135 D005998 n-(5-acetyl-2-hydroxy-phenyl)-methanesulfonamide Glycine 98.5% extra pure -GMP manufactured 500gm 4896-76-8 6055-72-7 127883-08-3 2311-65-1 4896-77-9 7575-55-5 87867-94-5 Benzene, diethenyl-, polymer with 2-methyl-1,3-butadiene, hydrogenated 112898-03-0 20220-62-6 211057-02-2 2255321-55-0 4896-75-7 513-29-1 52-64-2 56-39-3 56414-89-2 623-33-6 67836-01-5 91795-59-4 glu Glycine, puriss. p.a., Reag. Ph. Eur., buffer substance, 99.7-101% (calc. to the dried substance) Glycine; 2-Aminoacetic acid; 2-Aminoacetic acid; 20: PN: WO2012076822 PAGE: 51 claimed sequence; 5: PN: US20090069547 PAGE: 10 claimed protein; 5: PN: WO2013027191 SEQID: 13 claimed sequence; 68: PN: US20110195077 SEQID: 13 claimed sequence; 75: PN: WO2011084714 SEQID: 78 claimed sequence; Aciport; Aminoacetic acid; Aminoethanoic acid; Glicoamin; Glycocoll; Glycolixir; Glycosthene; Gyn-Hydralin; H 1; NSC 25936; NSC 2916; NSC 54188, Padil UNL",
+      "biological_summary": "Supplemental glycine may have antispastic activity. Very early findings suggest it may also have antipsychotic activity as well as antioxidant and anti-inflammatory activities.Rare disease (orphan) designations Treatment of maple syrup urine disease glycine Positive 2018-10-26AMINOACETIC ACID HAS BEEN OCCASIONALLY USED IN THERAPY OF MYASTHENIA GRAVIS BUT MOST INVESTIGATORS DOUBT THAT THE CMPD HAS ANY VALUE IN THIS DISORDER. ... /IT/ IS ALSO USED IN...ANTACID PREPN, SOMETIMES AS A COMPLEX SALT. HOWEVER.../IT HAS/ LIMITED BUFFERING CAPACITY... AMINOACETIC ACID IS USED IN...1.1% SOLN AS AN IRRIGATING FLUID IN TRANSURETHRAL RESECTION OF THE PROSTATE. ALTHOUGH A 2.1% SOLN...IS ISOTONIC, IT HAS BEEN FOUND THAT A 1.1% SOLN IS NONHEMOLYTIC. USUALLY FROM 10-15 L OF AMINOACETIC ACID SOLN ARE REQUIRED FOR IRRIGATION DURING TRANSURETHRAL RESECTION OF PROSTATE. MEDICATION (VET): IV USE IN DOGS INCREASES THEIR TOLERANCE AGAINST CERTAIN TOXIC PARENTERAL AMINO ACID MIXT. For more Therapeutic Uses (Complete) data for GLYCINE (8 total), please visit the HSDB record page.",
+      "pharmacology": "Helps trigger the release of oxygen to the energy requiring cell-making process; Important in the manufacturing of hormones responsible for a strong immune system.Substances used for their pharmacological actions on glycinergic systems. Glycinergic agents include agonists, antagonists, degradation or uptake inhibitors, depleters, precursors, and modulators of receptor function. (See all compounds classified as Glycine Agents.)B - Blood and blood forming organs B05 - Blood substitutes and perfusion solutions B05C - Irrigating solutions B05CX - Other irrigating solutions B05CX03 - GlycineAbsorbed from the small intestine via an active transport mechanism.Hepatic HepaticIn the CNS, there exist strychnine-sensitive glycine binding sites as well as strychnine-insensitive glycine binding sites. The strychnine-insensitive glycine-binding site is located on the NMDA receptor complex. The strychnine-sensitive glycine receptor complex is comprised of a chloride channel and is a member of the ligand-gated ion channel superfamily. The putative antispastic activity of supplemental glycine could be mediated by glycine's binding to strychnine-sensitive binding sites in the spinal cord. This would result in increased chloride conductance and consequent enhancement of inhibitory neurotransmission. The ability of glycine to potentiate NMDA receptor-mediated neurotransmission raised the possibility of its use in the management of neuroleptic-resistant negative symptoms in schizophrenia. Animal studies indicate that supplemental glycine protects against endotoxin-induced lethality, hypoxia-reperfusion injury after liver transplantation, and D-galactosamine-mediated liver injury. Neutrophils are thought to participate in these pathologic processes via invasion of tissue and releasing such reactive oxygen species as superoxide. In vitro studies have shown that neutrophils contain a glycine-gated chloride channel that can attenuate increases in intracellular calcium and diminsh neutrophil oxidant production. This research is ealy-stage, but suggests that supplementary glycine may turn out to be useful in processes where neutrophil infiltration contributes to toxicity, such as ARDS. HYPERPOLARIZATION OF MOTONEURONS PRODUCED BY IONTOPHORETIC APPLICATION OF GLYCINE IS RELATIVELY TRANSIENT BUT APPROACHES THE EQUILIBRIUM POTENTIAL FOR THE INDIRECTLY ACTIVATED INHIBITORY POSTSYNAPTIC POTENTIAL...TESTS WITH GABA... INDICATE SIMILAR ELECTROPHYSIOLOGICAL EFFECTS & SIMILAR INCR IN CL- CONDUCTANCE. MAJOR EVIDENCE THAT FAVORS GLYCINE AS MEDIATOR OF INTRASPINAL POSTSYNAPTIC INHIBITION IS THE SELECTIVE ANTAGONISM OF ITS EFFECTS BY STRYCHNINE. ... GLYCINE ALSO APPEARS TO BE MOST LIKELY TRANSMITTER FOR INHIBITORY INTERNEURONS IN RETICULAR FORMATION BUT NOT IN CUNEATE NUCLEUS.Bladder Brain Epidermis Fibroblasts Intestine Kidney Neuron Pancreas Placenta Platelet Prostate Spleen Thyroid GlandExtracellular Lysosome Mitochondria Peroxisome2-Hydroxyglutric Aciduria (D And L Form) 27-Hydroxylase Deficiency 3-Phosphoglycerate dehydrogenase deficiency 4-Hydroxybutyric Aciduria/Succinic Semialdehyde Dehydrogenase Deficiency 5-oxoprolinase deficiency 5-Oxoprolinuria Acute Intermittent Porphyria Adenine phosphoribosyltransferase deficiency (APRT) Adenosine Deaminase Deficiency Adenylosuccinate Lyase Deficiency Total 76 pathways, visit the HMDB page for details",
+      "literature_abstracts": []
+    },
+    "descriptions": {
+      "perplexity_description": "",
+      "hmdb_description": "This is a placeholder description for testing purposes.",
+      "contextual_description": "",
+      "llm_description": "Metabolite: Glucose | \nAlso known as: Synonym1, Synonym2 | \nDescription: This is a placeholder description for testing purposes."
+    },
+    "biological_roles": [],
+    "database_ids": {
+      "hmdb_id": "HMDB0000123",
+      "pubchem_cid": "750"
+    },
+    "data_sources": {
+      "perplexity_success": false,
+      "hmdb_success": true,
+      "pubchem_success": true,
+      "has_contextual_info": false,
+      "primary_source": "HMDB"
+    },
+    "enrichment_metadata": {
+      "enriched_timestamp": "2025-06-29T11:38:31.362779",
+      "enricher_version": "1.0.0"
+    },
+    "timing_summary": {
+      "total_enrichment_seconds": 2.01,
+      "sources": [
+        {
+          "source": "hmdb",
+          "elapsed_seconds": 0.0,
+          "from_cache": true
+        },
+        {
+          "source": "pubchem",
+          "elapsed_seconds": 2.0069739818573,
+          "from_cache": false
+        }
+      ]
+    },
+    "hmdb_timing": {
+      "source": "hmdb",
+      "elapsed_seconds": 0.0,
+      "from_cache": true
+    },
+    "pubchem_timing": {
+      "source": "pubchem",
+      "elapsed_seconds": 2.0069739818573,
+      "from_cache": false
+    },
+    "original_data": {
+      "low_level": "",
+      "high_level": "",
+      "sd": "",
+      "reference": ""
+    }
+  },
+  "HMDB0000190": {
+    "hmdb_id": "HMDB0000190",
+    "original_name": "Lactate",
+    "enhanced_name": "Lactate",
+    "all_synonyms": [
+      "Synonym1",
+      "Synonym2"
+    ],
+    "chemical_classes": [],
+    "taxonomy": {
+      "kingdom": "",
+      "super_class": "",
+      "class": "",
+      "sub_class": "",
+      "direct_parent": ""
+    },
+    "chemical_properties": {
+      "iupac_name": "",
+      "common_name": "",
+      "molecular_formula": "C3H6O3",
+      "molecular_weight": "",
+      "canonical_smiles": "CC(C(=O)O)O",
+      "inchi": "InChI=1S/C3H6O3/c1-2(4)3(5)6/h2,4H,1H3,(H,5,6)/t2-/m0/s1",
+      "pubchem_cid": "107689",
+      "compound_description": "(S)-lactic acid is an optically active form of lactic acid having (S)-configuration. It has a role as an Escherichia coli metabolite and a human metabolite. It is a 2-hydroxypropanoic acid and a (2S)-2-hydroxy monocarboxylic acid. It is a conjugate acid of a (S)-lactate. It is an enantiomer of a (R)-lactic acid. L-Lactic acid is a metabolite found in or produced by Escherichia coli (strain K12, MG1655). L-Lactic acid has been reported in Arabidopsis thaliana, Homo sapiens, and other organisms with data available. Lactic Acid, L- is the levorotatory isomer of lactic acid, the biologically active isoform in humans.  Lactic acid or lactate is produced during fermentation from pyruvate by lactate dehydrogenase. This reaction, in addition to producing lactic acid, also produces nicotinamide adenine dinucleotide (NAD) that is then used in glycolysis to produce energy source adenosine triphosphate (ATP). Lactic acid plays a role in several biochemical processes and is produced in the muscles during intense activity. Lactate measurement in the critically ill has been traditionally used to stratify patients with poor outcome. However, plasma lactate levels are the result of a finely tuned interplay of factors that affect the balance between its production and its clearance. When the oxygen supply does not match its consumption, organisms such as man who are forced to produce ATP for their integrity adapt in many different ways up to the point when energy failure occurs. Lactate, being part of the adaptive response, may then be used to assess the severity of the supply/demand imbalance. In such a scenario, the time to intervention becomes relevant: early and effective treatment may allow the cell to revert to a normal state, as long as the oxygen machinery (i.e. mitochondria) is intact. Conversely, once the mitochondria are deranged, energy failure occurs even in the presence of normoxia. The lactate increase in critically ill patients may therefore be viewed as an early marker of a potentially reversible state.  A number of studies have demonstrated that malignant transformation is associated with an increase in glycolytic flux and in anaerobic and aerobic cellular lactate excretion. Using quantitative bioluminescence imaging in various primary carcinomas in patients (uterine cervix, head and neck, colorectal region) at first diagnosis of the disease, lactate concentrations in tumors in vivo could be relatively low or extremely high (up to 40 micromol/g) in different individual tumors or within the same lesion. In all tumor entities investigated, high molar concentrations of lactate were correlated with a high incidence of distant metastasis already in an early stage of the disease. Low lactate tumors (< median of approximately 8 micromol/g) were associated with both a longer overall and disease free survival compared to high lactate lesions (lactate > approximately 8 micromol/g). Lactate dehydrogenase was found to be upregulated in most of these tumors compared to surrounding normal tissue.  (A3333, A3334). D-Lactic acid is the end product of the enzyme Glyoxalase II ([EC:3.1.2.6] hydroxyacyl-glutathione hydrolase) which converts the intermediate substrate S-lactoyl-glutathione to reduced glutathione and D-lactate. (OMIM 138790). The concentrated form is used internally to prevent gastrointestinal fermentation. L-Lactic acid is a metabolite found in or produced by Saccharomyces cerevisiae. A normal intermediate in the fermentation (oxidation, metabolism) of sugar. The concentrated form is used internally to prevent gastrointestinal fermentation. (From Stedman, 26th ed) See also: Polylactide, L- (monomer of); Arnica montana; lactic acid, L-; zinc oxide (component of); Leg Cramps Relief (FDA NDC: 61727-334) (component of) ... View More ...(2S)-2-hydroxypropanoic acidInChI=1S/C3H6O3/c1-2(4)3(5)6/h2,4H,1H3,(H,5,6)/t2-/m0/s1JVTAAEKCZFNVCJ-REOHCLBHSA-NC[C@@H](C(=O)O)OC3H6O3 C3H6O379-33-4 79-33-4 79-33-4 79-33-4 79-33-4 79-33-4 79-33-4 79-33-4 79-33-4 79-33-4 79-33-4 79-33-426811-96-11715-99-7 1715-99-7201-196-2F9S9FFU82NCHEBI:422CHEMBL330546DB14475DTXSID6034689HMDB0000190C0018637125C61808J9.134K2462499Q270809552 Hydroxypropanoic Acid 2 Hydroxypropionic Acid 2-Hydroxypropanoic Acid 2-Hydroxypropionic Acid Ammonium Lactate D Lactic Acid D-Lactic Acid L Lactic Acid L-Lactic Acid Lactate Lactate, Ammonium Lactic Acid Propanoic Acid, 2-Hydroxy-, (2R)- Propanoic Acid, 2-Hydroxy-, (2S)- Sarcolactic AcidL-Lactic acid (S)-Lactic acid (S)-2-Hydroxypropanoic acid Sarcolactic acid (2S)-2-hydroxypropanoic acid (+)-Lactic acid L(+)-LACTIC ACID Paralactic acid (S)-(+)-Lactic acid Lactic acid, L- Tisulac PURAC Paramilchsaeure Fleischmilchsaeure (S)-Milchsaeure Acidum sarcolacticum Sarcolacticum acidum Pleo sanvis PH 90 (S)-2-Hydroxypropionsaeure L-Milchsaeure UNII-F9S9FFU82N PROPANOIC ACID, 2-HYDROXY-, (S)- EINECS 201-196-2 F9S9FFU82N CHEBI:422 L(+)-2-Hydroxypropionsaeure BRN 1720251 DEXTROROTATORY LACTIC ACID EC 201-196-2 4-03-00-00633 (Beilstein Handbook Reference) l-milchsaure (S)-LACTIC ACID (EP MONOGRAPH) (S)-LACTIC ACID [EP MONOGRAPH] Lactisan Winter Pleo Sanuvis L Lactic Acid ClO2-C Activator L-LACTIC ACID (+) LACTIC ACID, L-(II) 201-196-2 79-33-4 L-(+)-Lactic acid (S)-2-Hydroxypropionic acid (S)-lactate L-lactate Propanoic acid, 2-hydroxy-, (2S)- L-(+)-alpha-Hydroxypropionic acid L-Lactic Acid, 90% (+)-Lactate MFCD00064266 PLLA S-Lactic acid; (S)-2-hydroxypropanoic acid 1-Hydroxyethane 1-carboxylic acid L-lacticacid (alpha)-Lactate L-Iactic acid a-Hydroxypropanoate a-Hydroxypropionate 26811-96-1 2OP nchembio867-comp9 (alpha)-Lactic acid alpha-Hydroxypropanoate alpha-Hydroxypropionate L-2-Hydroxypropanoate a-Hydroxypropanoic acid a-Hydroxypropionic acid L-(+) Lactic Acid (S)-2-Hydroxypropanoate (S)-2-Hydroxypropionate 1-Hydroxyethanecarboxylate L-Lactic acid, anhydrous L-2-Hydroxypropanoic acid L-Lactic acid (Standard) L-Lactic acid - 98% bmse000208 bmse000818 bmse000979 D-Lactic Acid (90%) (S)-2-hydroxy-Propanoate L-LACTIC ACID [MI] SCHEMBL16958 L-LACTIC ACID [JAN] L-(+)-Lactic acid solution 1-Hydroxyethane 1-carboxylate (S)-2-hydroxy-Propanoic acid (S)-2-hydroxy-propionic acid CHEMBL330546 GTPL2932 L- LACTIC ACID (+) (S)-(+)-2-Hydroxypropanoate L-(+)-Lactic acid, 80% (S)(+)2 hydroxypropionic acid DTXSID6034689 LACTIC ACID, L- [II] HY-Y0479R (s)(+)-2 hydroxypropionic acid MSK4427 L-Lactic acid, solution, 85%+ SARCOLACTIC ACID [WHO-DD] L-(+)-Lactic acid 95% liquid 80% (w/w) Lactic Acid Solution L-(+)-Lactic acid solution, 1M L-(+)-Lactic acid, >=98% SARCOLACTICUM ACIDUM [HPUS] (S)-(+)-2-Hydroxypropanoic acid 2-Hydroxypropanoic acid, (S)- # HY-Y0479 s6250 AKOS025146504 DB14475 L-(+)-Lactic acid, analytical standard FL162669 FL168668 CS-0015266 L0165 NS00006010 EN300-91905 C00186 D71144 G64463 L-(+)-Lactic acid, BioXtra, >=98% (titration) L-(+)-Lactic acid, Vetec(TM) reagent grade, 86% Q27080955 5E39D33D-2F71-4C24-BC7A-5E6F27E4CF83 L+Lactic Acid, Free Acid (S)-2-Hydroxypropionic acid, Sarcolactic acidEspiritin lactic acid lactate Atrisorb Sculptra Ticron Acetonic acid Pyruvic acid Milk acid D-Lactic acid New-Fill Lactic Acid FCC Poly(lactic acid) 2-hydroxypropanoate L(+)-Lacticacid 2-Hydroxypropionate Poly-L-lactic acid (|A)-lactate Sodium (S)-lactate poly(L-lactic acid) 2-hydroxypropanoic acid l-(+)- lactic acid C9H7BrO Lactic Acid, food grade 2-hydroxy-propionic acid AC1Q5QUL L-Lactic acid homopolymer S-Lactic acid sodium salt alpha-Hydroxypropanoic acid alpha-Hydroxypropionic acid L( )-2-Hydroxypropionsaeure D06FZS (?)-LACTATE JVTAAEKCZFNVCJ-REOHCLBHSA-N UNII-W92NDP347A 1-Hydroxyethanecarboxylic acid (S)-2-oC>>u+/-uEa AC1L32K7 AC1Q29M6 C3H6O3 L-(+)-Lactic acid, anhydrous LACTIC ACID SOLUTION 2KG KS-00000WTK (C3-H6-O3)x- LACTIC ACID SOLUTION 100G LACTIC ACID SOLUTION 500G (S)-(+)-2-Hydroxypropionic acid C3-H6-O3 ZINC4658560 AR-1J3353 CID107689 DL6049 (1/4) inverted exclamation markEeEa (2S)-2-Hydroxypropanoic acid homopolymer AJ-51840 BC207702 LS-87453 SC-18207 L-Lactic acid (2-hydroxy propionic acid) Propanoic acid, 2-hydroxy-, (S)-, homopolymer FT-0773848 V3455 L-(+)-Lactic acid solution, ~40% in H2O L-( )-Lactic acid, 90% - 100ML 100ml L-(+)-Lactic acid solution, in H2O, >=85% A961859 Lactic acid in water =85.0-90.0% (w/w) ACS L-(+)-Lactic acid solution, 30% in H2O (by weight) L-(+)-Lactic acid solution, ~50% (L-lactic acid in water) L-(+)-Lactic acid solution, purum, ~20% (L-lactic acid in water) 867-56-1 lac L-(+)-Lactic acid solution, ACS reagent, 85-90% (L-lactic acid in water) L-(+)-Lactic acid solution, purum p.a., 79-81% (L-lactic acid in water, T) (-)-Lactic Acid; (2R)-2-Hydroxypropanoic Acid; (R)-(-)-Lactic Acid; (R)-2-Hydroxypropanoic Acid; (R)-2-Hydroxypropionic Acid; (R)-Lactic Acid; (R)-a-Hydroxypropionic Acid; D-(-)-Lactic Acid; D-Lactic Acid; l-Lactic Acid 10326-41-7 50-21-5 75890-05-0 93012-30-7 L-(+)-Lactic acid solution, meets analytical specification of Ph.??Eur., BP, 88-92% total acid basis PYR",
+      "biological_summary": "Prevention of pregnancyPaediatric investigation (S)-lactic acid Endocrinology-Gynaecology-Fertility-Metabolism Vaginal gel Vaginal use W: decision granting a waiver in all age groups for all conditions or indications 2016-09-09",
+      "pharmacology": "All Tissues PlacentaCytoplasm Extracellular MitochondriaFructose-1,6-diphosphatase deficiency Glutaminolysis and Cancer Glycogen Storage Disease Type 1A (GSD1A) or Von Gierke Disease Glycogenosis, Type IA. Von gierke disease Glycogenosis, Type IB Glycogenosis, Type IC Glycolysis / Gluconeogenesis Leigh Syndrome Phosphoenolpyruvate carboxykinase deficiency 1 (PEPCK1) Primary hyperoxaluria II, PH2 Total 16 pathways, visit the HMDB page for details",
+      "literature_abstracts": []
+    },
+    "descriptions": {
+      "perplexity_description": "",
+      "hmdb_description": "This is a placeholder description for testing purposes.",
+      "contextual_description": "",
+      "llm_description": "Metabolite: Lactate | \nAlso known as: Synonym1, Synonym2 | \nDescription: This is a placeholder description for testing purposes."
+    },
+    "biological_roles": [],
+    "database_ids": {
+      "hmdb_id": "HMDB0000190",
+      "pubchem_cid": "107689"
+    },
+    "data_sources": {
+      "perplexity_success": false,
+      "hmdb_success": true,
+      "pubchem_success": true,
+      "has_contextual_info": false,
+      "primary_source": "HMDB"
+    },
+    "enrichment_metadata": {
+      "enriched_timestamp": "2025-06-29T11:38:32.860006",
+      "enricher_version": "1.0.0"
+    },
+    "timing_summary": {
+      "total_enrichment_seconds": 1.5,
+      "sources": [
+        {
+          "source": "hmdb",
+          "elapsed_seconds": 0.0,
+          "from_cache": true
+        },
+        {
+          "source": "pubchem",
+          "elapsed_seconds": 1.4965717792510986,
+          "from_cache": false
+        }
+      ]
+    },
+    "hmdb_timing": {
+      "source": "hmdb",
+      "elapsed_seconds": 0.0,
+      "from_cache": true
+    },
+    "pubchem_timing": {
+      "source": "pubchem",
+      "elapsed_seconds": 1.4965717792510986,
+      "from_cache": false
+    },
+    "original_data": {
+      "low_level": "",
+      "high_level": "",
+      "sd": "",
+      "reference": ""
+    }
+  }
+}
