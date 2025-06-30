@@ -724,8 +724,8 @@ Focus on providing accurate, scientific information from reliable biochemical an
             return []
         
         try:
-            url = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/synonyms/compound/{cid}/JSON"
-            response = self.session.get(url)
+            url = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/{cid}/JSON?heading=Synonyms"
+            response = self.session.get(url, timeout=30)
             
             if response.status_code != 200:
                 logger.warning(f"Failed to get PubChem synonyms for CID {cid}: {response.status_code}")
@@ -734,13 +734,30 @@ Focus on providing accurate, scientific information from reliable biochemical an
             data = response.json()
             synonyms = []
             
-            if "InformationList" in data and "Information" in data["InformationList"]:
-                for info in data["InformationList"]["Information"]:
-                    if "Synonym" in info:
-                        synonyms.extend(info["Synonym"])
+            if "Record" in data and "Section" in data["Record"]:
+                for section in data["Record"]["Section"]:
+                    if section.get("TOCHeading") == "Names and Identifiers":
+                        for subsection in section.get("Section", []):
+                            if subsection.get("TOCHeading") == "Synonyms":
+                                for info in subsection.get("Information", []):
+                                    if "Value" in info and "StringWithMarkup" in info["Value"]:
+                                        for markup in info["Value"]["StringWithMarkup"]:
+                                            if "String" in markup:
+                                                synonyms.append(markup["String"])
+                                    elif "Value" in info and "String" in info["Value"]:
+                                        synonyms.append(info["Value"]["String"])
             
-            logger.info(f"Extracted {len(synonyms)} synonyms from PubChem for CID {cid}")
-            return synonyms
+            # Clean up synonyms and remove duplicates
+            cleaned_synonyms = []
+            seen = set()
+            for syn in synonyms:
+                cleaned = syn.strip()
+                if cleaned and cleaned.lower() not in seen and len(cleaned) < 100:
+                    cleaned_synonyms.append(cleaned)
+                    seen.add(cleaned.lower())
+            
+            logger.info(f"Extracted {len(cleaned_synonyms)} unique synonyms from PubChem for CID {cid}")
+            return cleaned_synonyms[:20]  # Limit to top 20 synonyms
         
         except Exception as e:
             logger.error(f"Error extracting PubChem synonyms for CID {cid}: {e}")
@@ -1137,19 +1154,33 @@ Focus on providing accurate, scientific information from reliable biochemical an
         """Extract synonyms from HMDB page."""
         synonyms = []
 
-        # Look for synonyms in various sections
-        synonym_sections = soup.find_all(['td', 'div'], string=re.compile(r'synonym', re.I))
-        for section in synonym_sections:
-            next_element = section.find_next_sibling()
-            if next_element:
-                text = next_element.get_text(strip=True)
+        # Look for synonyms in specific table row
+        synonym_row = soup.find('td', string=re.compile(r'Synonyms', re.I))
+        if synonym_row:
+            value_cell = synonym_row.find_next_sibling('td')
+            if value_cell:
+                # Extract all text from the cell, splitting by common delimiters
+                text = value_cell.get_text(separator=';')
                 if text:
-                    # Split by common delimiters
                     parts = re.split(r'[;,\n]', text)
                     for part in parts:
                         clean_part = part.strip()
                         if clean_part and len(clean_part) > 1 and len(clean_part) < 100:
                             synonyms.append(clean_part)
+
+        # Alternative approach: look for a specific section
+        if not synonyms:
+            synonym_sections = soup.find_all(['td', 'div'], string=re.compile(r'synonym', re.I))
+            for section in synonym_sections:
+                next_element = section.find_next_sibling()
+                if next_element:
+                    text = next_element.get_text(strip=True)
+                    if text:
+                        parts = re.split(r'[;,\n]', text)
+                        for part in parts:
+                            clean_part = part.strip()
+                            if clean_part and len(clean_part) > 1 and len(clean_part) < 100:
+                                synonyms.append(clean_part)
 
         # Remove duplicates and clean up
         unique_synonyms = []
