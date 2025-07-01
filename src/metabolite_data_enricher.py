@@ -455,7 +455,8 @@ Focus on providing accurate, scientific information from reliable biochemical an
 
     def get_hmdb_info(self, hmdb_id: str) -> Dict[str, Any]:
         """
-        Scrape HMDB metabolite page for detailed information.
+        Get comprehensive metabolite information from HMDB using XML files.
+        Checks for local XML files in data/hmdb_xml/ and downloads them if not present.
 
         Args:
             hmdb_id (str): HMDB ID (e.g., 'HMDB0000687')
@@ -466,7 +467,7 @@ Focus on providing accurate, scientific information from reliable biochemical an
         # Start timing
         start_time = time.time()
         
-        if hmdb_id in self.cache:
+        if hmdb_id in self.cache and not self.refresh_cache:
             result = self.cache[hmdb_id]
             # Add timing information for cached results
             if 'timing' not in result:
@@ -482,30 +483,27 @@ Focus on providing accurate, scientific information from reliable biochemical an
             return self._create_empty_hmdb_info(hmdb_id)
 
         try:
-            url = f"https://hmdb.ca/metabolites/{hmdb_id}"
-            logger.info(f"Fetching HMDB data for {hmdb_id}")
-
-            response = self.session.get(url, timeout=30)
-            response.raise_for_status()
-
-            soup = BeautifulSoup(response.content, 'html.parser')
-
-            # Extract information
+            # Use EnhancedHMDBLookup to fetch data
+            from enhanced_hmdb_lookup import EnhancedHMDBLookup
+            hmdb_lookup = EnhancedHMDBLookup()
+            hmdb_data = hmdb_lookup.get_hmdb_info(hmdb_id)
+            
+            # Process the data to match the expected format
             info = {
                 'hmdb_id': hmdb_id,
-                'synonyms': self._extract_synonyms(soup),
-                'chemical_classes': self._extract_chemical_classes(soup),
-                'description': self._extract_description(soup),
-                'iupac_name': self._extract_iupac_name(soup),
-                'common_name': self._extract_common_name(soup),
-                'kingdom': self._extract_taxonomy_field(soup, 'Kingdom'),
-                'super_class': self._extract_taxonomy_field(soup, 'Super Class'),
-                'class': self._extract_taxonomy_field(soup, 'Class'),
-                'sub_class': self._extract_taxonomy_field(soup, 'Sub Class'),
-                'direct_parent': self._extract_taxonomy_field(soup, 'Direct Parent'),
+                'synonyms': hmdb_data.get('synonyms', []),
+                'chemical_classes': hmdb_data.get('chemical_classes', []),
+                'description': hmdb_data.get('description', ''),
+                'iupac_name': hmdb_data.get('iupac_name', ''),
+                'common_name': hmdb_data.get('name', ''),
+                'kingdom': hmdb_data.get('taxonomy', {}).get('kingdom', ''),
+                'super_class': hmdb_data.get('taxonomy', {}).get('super_class', ''),
+                'class': hmdb_data.get('taxonomy', {}).get('class', ''),
+                'sub_class': hmdb_data.get('taxonomy', {}).get('sub_class', ''),
+                'direct_parent': hmdb_data.get('taxonomy', {}).get('direct_parent', ''),
                 'source': 'HMDB',
                 'timestamp': datetime.now().isoformat(),
-                'success': True
+                'success': hmdb_data.get('hmdb_success', False)
             }
 
             # Calculate time taken
@@ -552,7 +550,8 @@ Focus on providing accurate, scientific information from reliable biochemical an
 
     def get_pubchem_info(self, metabolite_name: str, hmdb_id: str = "") -> Dict[str, Any]:
         """
-        Get additional information from PubChem API.
+        Get additional information from PubChem using HMDB data as a bridge.
+        Priority order: CID from HMDB > InChI > SMILES > Chemical name
 
         Args:
             metabolite_name (str): Name of the metabolite
@@ -561,66 +560,79 @@ Focus on providing accurate, scientific information from reliable biochemical an
         Returns:
             Dict containing additional chemical information
         """
+        from pubchem_data_retriever import PubChemRetriever
+        import re
+
         # Start timing
         start_time = time.time()
-        
-        cache_key = f"pubchem_{hmdb_id}_{metabolite_name}"
-        if cache_key in self.cache and not self.refresh_cache:
-            logger.debug(f"Using cached PubChem data for {metabolite_name} (HMDB ID: {hmdb_id})")
-            result = self.cache[cache_key]
-            # Add timing information for cached results
-            if 'timing' not in result:
-                result['timing'] = {
-                    'source': 'pubchem',
-                    'elapsed_seconds': 0.0,
-                    'from_cache': True
-                }
-            return result
-        
-        if self.refresh_cache:
-            logger.debug(f"Bypassing cache for PubChem data for {metabolite_name} (HMDB ID: {hmdb_id})")
 
-        try:
-            data = None
-            
-            # First try searching by HMDB ID if available
-            if hmdb_id and hmdb_id != 'NOID00000':
-                try:
-                    # Try direct lookup by HMDB ID using xref endpoint (most reliable method)
-                    search_url = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/xref/RegistryID/{hmdb_id}/JSON"
-                    logger.info(f"Searching PubChem by HMDB ID: {hmdb_id} for {metabolite_name}")
-                    response = self.session.get(search_url, timeout=30)
-                    response.raise_for_status()
-                    data = response.json()
-                    logger.debug(f"PubChem HMDB ID search response for {hmdb_id}: {response.text[:200]}...")
-                except Exception as hmdb_search_error:
-                    logger.warning(f"Failed to find {metabolite_name} (HMDB ID: {hmdb_id}) in PubChem by HMDB ID, falling back to name search: {hmdb_search_error}")
-            
-            # If HMDB ID search failed or wasn't available, try by name
-            if data is None:
-                try:
-                    from urllib.parse import quote
-                    search_url = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/{quote(metabolite_name)}/JSON"
-                    logger.info(f"Searching PubChem by name: {metabolite_name}")
-                    response = self.session.get(search_url, timeout=30)
-                    response.raise_for_status()
-                    data = response.json()
-                    logger.debug(f"PubChem name search response for {metabolite_name}: {response.text[:200]}...")
-                except Exception as name_search_error:
-                    logger.error(f"Error fetching PubChem data for {metabolite_name}: {name_search_error}")
-                    # Return empty result with error info
-                    result = {
-                        'pubchem_cid': '',
-                        'molecular_formula': '',
-                        'molecular_weight': '',
-                        'success': False,
-                        'source': 'PubChem',
-                        'error': str(name_search_error)
-                    }
-                    self.cache[cache_key] = result
-                    return result
+        # Step 1: Get identifiers from HMDB data
+        hmdb_info = {}
+        if hmdb_id:
+            hmdb_info = self.get_hmdb_info(hmdb_id)
 
-            info = {
+        # Step 2: Try to determine PubChem CID using priority order
+        cid = ""
+        search_method = ""
+        
+        # Priority 1: Try CID from HMDB data
+        if hmdb_info.get('success') and 'pubchem_cid' in hmdb_info:
+            potential_cid = hmdb_info.get('pubchem_cid', '')
+            if potential_cid:
+                cid = str(potential_cid)
+                search_method = "HMDB CID"
+                logger.info(f"Found PubChem CID {cid} from HMDB data for {metabolite_name}")
+
+        # Priority 2: Try InChI string from HMDB
+        if not cid and hmdb_info.get('success'):
+            inchi = hmdb_info.get('inchi', '')
+            if inchi:
+                cid = self._get_cid_by_inchi(inchi)
+                if cid:
+                    search_method = "HMDB InChI"
+                    logger.info(f"Found PubChem CID {cid} using InChI from HMDB for {metabolite_name}")
+
+        # Priority 3: Try SMILES string from HMDB
+        if not cid and hmdb_info.get('success'):
+            smiles = hmdb_info.get('smiles', '')
+            if smiles:
+                cid = self._get_cid_by_smiles(smiles)
+                if cid:
+                    search_method = "HMDB SMILES"
+                    logger.info(f"Found PubChem CID {cid} using SMILES from HMDB for {metabolite_name}")
+
+        # Priority 4: Try chemical names from HMDB (common name, IUPAC name, synonyms)
+        if not cid and hmdb_info.get('success'):
+            name_candidates = []
+            
+            # Add HMDB names in order of preference
+            if hmdb_info.get('common_name'):
+                name_candidates.append(hmdb_info['common_name'])
+            if hmdb_info.get('iupac_name'):
+                name_candidates.append(hmdb_info['iupac_name'])
+            
+            # Add top synonyms
+            synonyms = hmdb_info.get('synonyms', [])
+            name_candidates.extend(synonyms[:5])  # Try top 5 synonyms
+            
+            for name in name_candidates:
+                if name and name.strip():
+                    cid = self._get_cid_by_name(name.strip())
+                    if cid:
+                        search_method = f"HMDB name: {name[:30]}..."
+                        logger.info(f"Found PubChem CID {cid} using HMDB name '{name}' for {metabolite_name}")
+                        break
+
+        # Priority 5: Fall back to original metabolite name
+        if not cid:
+            cid = self._get_cid_by_name(metabolite_name)
+            if cid:
+                search_method = "Original name"
+                logger.info(f"Found PubChem CID {cid} using original name for {metabolite_name}")
+
+        if not cid:
+            logger.warning(f"No PubChem CID found for {metabolite_name} using any method, skipping PubChem enrichment.")
+            return {
                 'pubchem_cid': '',
                 'molecular_formula': '',
                 'molecular_weight': '',
@@ -631,84 +643,59 @@ Focus on providing accurate, scientific information from reliable biochemical an
                 'biological_summary': '',
                 'pharmacology': '',
                 'literature_abstracts': [],
+                'classifications': {},
+                'pubchem_taxonomy': {},
                 'source': 'PubChem',
                 'timestamp': datetime.now().isoformat(),
-                'success': True
-            }
-
-            if 'PC_Compounds' in data and data['PC_Compounds']:
-                compound = data['PC_Compounds'][0]
-
-                # Extract CID
-                cid = ''
-                if 'id' in compound and 'id' in compound['id'] and 'cid' in compound['id']['id']:
-                    cid = str(compound['id']['id']['cid'])
-                    info['pubchem_cid'] = cid
-                    
-                    # Fetch and store PubChem synonyms
-                    try:
-                        pubchem_synonyms = self._extract_pubchem_synonyms(cid)
-                        if pubchem_synonyms:
-                            info['pubchem_synonyms'] = pubchem_synonyms
-                            # Also add to all_synonyms
-                            if 'all_synonyms' not in info:
-                                info['all_synonyms'] = []
-                            for synonym in pubchem_synonyms:
-                                if synonym not in info['all_synonyms']:
-                                    info['all_synonyms'].append(synonym)
-                    except Exception as e:
-                        logger.error(f"Error extracting PubChem synonyms for CID {cid}: {e}")
-                    
-                    # Fetch additional PubChem data (descriptions, summaries, etc.)
-                    try:
-                        self._fetch_pubchem_additional_data(cid, info)
-                    except Exception as e:
-                        logger.error(f"Error fetching additional PubChem data for CID {cid}: {e}")
-
-                # Extract molecular formula
-                if 'props' in compound:
-                    for prop in compound['props']:
-                        if 'urn' in prop and 'label' in prop['urn'] and prop['urn']['label'] == 'Molecular Formula':
-                            if 'value' in prop and 'sval' in prop['value']:
-                                info['molecular_formula'] = prop['value']['sval']
-                        
-                        elif 'urn' in prop and 'label' in prop['urn'] and prop['urn']['label'] == 'Molecular Weight':
-                            if 'value' in prop and 'fval' in prop['value']:
-                                info['molecular_weight'] = str(prop['value']['fval'])
-                        
-                        elif 'urn' in prop and 'label' in prop['urn'] and prop['urn']['label'] == 'SMILES' and 'name' in prop['urn'] and prop['urn']['name'] == 'Canonical':
-                            if 'value' in prop and 'sval' in prop['value']:
-                                info['canonical_smiles'] = prop['value']['sval']
-                        
-                        elif 'urn' in prop and 'label' in prop['urn'] and prop['urn']['label'] == 'InChI':
-                            if 'value' in prop and 'sval' in prop['value']:
-                                info['inchi'] = prop['value']['sval']
-
-            # Add timing information
-            elapsed_time = time.time() - start_time
-            info['timing'] = {
-                'source': 'pubchem',
-                'elapsed_seconds': elapsed_time,
-                'from_cache': False
-            }
-            
-            # Cache the result
-            self.cache[cache_key] = info
-            return info
-            
-        except Exception as e:
-            logger.error(f"Error in get_pubchem_info for {metabolite_name}: {e}")
-            # Return empty result with error info
-            result = {
-                'pubchem_cid': '',
-                'molecular_formula': '',
-                'molecular_weight': '',
                 'success': False,
-                'source': 'PubChem',
-                'error': str(e)
+                'error': 'No CID found using any method',
+                'search_methods_tried': search_method or 'All methods failed'
             }
-            self.cache[cache_key] = result
-            return result
+
+        # Step 3: Get compound data from PubChem using CID
+        retriever = PubChemRetriever()
+        compound_data = retriever.get_compound_data(cid)
+
+        synonyms = compound_data.get('synonyms', [])
+        logger.info(f"Retrieved {len(synonyms)} synonyms from PubChem for {metabolite_name} (CID: {cid}, Method: {search_method})")
+
+        # Extract bioactivity data and join into biological summary
+        bioactivity_list = compound_data.get('bioactivity', [])
+        biological_summary = '. '.join(bioactivity_list) if bioactivity_list else ''
+
+        # Extract classifications and taxonomy data
+        classifications = compound_data.get('classifications', {})
+        taxonomy = compound_data.get('taxonomy', {})
+
+        info = {
+            'pubchem_cid': cid,
+            'molecular_formula': compound_data.get('properties', {}).get('molecular_formula', ''),
+            'molecular_weight': compound_data.get('properties', {}).get('molecular_weight', ''),
+            'canonical_smiles': '',  # Not parsed in retriever, could be added if needed
+            'inchi': '',             # Not parsed in retriever, could be added if needed
+            'pubchem_synonyms': synonyms,
+            'compound_description': compound_data.get('description', ''),
+            'biological_summary': biological_summary,
+            'pharmacology': '',  # Could be extracted from bioactivity if needed
+            'literature_abstracts': compound_data.get('literature', []),
+            'classifications': classifications,
+            'pubchem_taxonomy': taxonomy,
+            'search_method': search_method,
+            'source': 'PubChem',
+            'timestamp': datetime.now().isoformat(),
+            'success': True
+        }
+
+        # Add timing information
+        elapsed_time = time.time() - start_time
+        info['timing'] = {
+            'source': 'pubchem',
+            'elapsed_seconds': elapsed_time,
+            'from_cache': False
+        }
+
+        self.cache[f"pubchem_{cid}_{metabolite_name}"] = info
+        return info
 
     def _extract_pubchem_synonyms(self, cid: str) -> list:
         """
@@ -979,6 +966,81 @@ Focus on providing accurate, scientific information from reliable biochemical an
         
         return abstracts
 
+    def _get_cid_by_inchi(self, inchi: str) -> str:
+        """
+        Get PubChem CID using InChI string.
+        
+        Args:
+            inchi (str): InChI string
+            
+        Returns:
+            str: PubChem CID or empty string if not found
+        """
+        try:
+            import requests
+            from urllib.parse import quote
+            url = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/inchi/{quote(inchi)}/cids/JSON"
+            response = requests.get(url, timeout=20)
+            if response.status_code == 200:
+                data = response.json()
+                if "IdentifierList" in data and "CID" in data["IdentifierList"]:
+                    cid_list = data["IdentifierList"]["CID"]
+                    if cid_list:
+                        return str(cid_list[0])
+        except Exception as e:
+            logger.debug(f"Error getting CID by InChI: {e}")
+        return ""
+
+    def _get_cid_by_smiles(self, smiles: str) -> str:
+        """
+        Get PubChem CID using SMILES string.
+        
+        Args:
+            smiles (str): SMILES string
+            
+        Returns:
+            str: PubChem CID or empty string if not found
+        """
+        try:
+            import requests
+            from urllib.parse import quote
+            url = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/smiles/{quote(smiles)}/cids/JSON"
+            response = requests.get(url, timeout=20)
+            if response.status_code == 200:
+                data = response.json()
+                if "IdentifierList" in data and "CID" in data["IdentifierList"]:
+                    cid_list = data["IdentifierList"]["CID"]
+                    if cid_list:
+                        return str(cid_list[0])
+        except Exception as e:
+            logger.debug(f"Error getting CID by SMILES: {e}")
+        return ""
+
+    def _get_cid_by_name(self, name: str) -> str:
+        """
+        Get PubChem CID using chemical name.
+        
+        Args:
+            name (str): Chemical name
+            
+        Returns:
+            str: PubChem CID or empty string if not found
+        """
+        try:
+            import requests
+            from urllib.parse import quote
+            url = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/{quote(name)}/cids/JSON"
+            response = requests.get(url, timeout=20)
+            if response.status_code == 200:
+                data = response.json()
+                if "IdentifierList" in data and "CID" in data["IdentifierList"]:
+                    cid_list = data["IdentifierList"]["CID"]
+                    if cid_list:
+                        return str(cid_list[0])
+        except Exception as e:
+            logger.debug(f"Error getting CID by name '{name}': {e}")
+        return ""
+
     def _extract_any_text_from_section(self, section: Dict) -> str:
         """
         Extract any text content from a PubChem PUG-View section.
@@ -1065,7 +1127,8 @@ Focus on providing accurate, scientific information from reliable biochemical an
                 'super_class': hmdb_info.get('super_class', ''),
                 'class': hmdb_info.get('class', ''),
                 'sub_class': hmdb_info.get('sub_class', ''),
-                'direct_parent': hmdb_info.get('direct_parent', '')
+                'direct_parent': hmdb_info.get('direct_parent', ''),
+                'hmdb_synonyms': hmdb_info.get('synonyms', [])
             },
             'chemical_properties': {
                 'iupac_name': self._get_best_value([perplexity_info.get('iupac_name', ''), hmdb_info.get('iupac_name', '')]),
@@ -1075,6 +1138,7 @@ Focus on providing accurate, scientific information from reliable biochemical an
                 'canonical_smiles': pubchem_info.get('canonical_smiles', ''),
                 'inchi': pubchem_info.get('inchi', ''),
                 'pubchem_cid': pubchem_info.get('pubchem_cid', ''),
+                'pubchem_synonyms': pubchem_info.get('pubchem_synonyms', []),
                 'compound_description': pubchem_info.get('compound_description', ''),
                 'biological_summary': pubchem_info.get('biological_summary', ''),
                 'pharmacology': pubchem_info.get('pharmacology', ''),

@@ -105,4 +105,4 @@ venv/
 
 # Debug files
 debug_*.py
-test_*.py
+test_*
